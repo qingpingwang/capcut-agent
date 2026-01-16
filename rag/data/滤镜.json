@@ -1,0 +1,7 @@
+{
+    "高清增强": {
+        "desc": "分类：人像\n名称：高清增强",
+        "content": "{\n\"adjust_params\": [],\n\"algorithm_artifact_path\": \"\",\n\"apply_target_type\": 0,\n\"bloom_params\": null,\n\"category_id\": \"10494\",\n\"category_name\": \"人像\",\n\"color_match_info\": {\n\"source_feature_path\": \"\",\n\"target_feature_path\": \"\",\n\"target_image_path\": \"\"\n},\n\"effect_id\": \"7426668776491453707\",\n\"enable_skin_tone_correction\": false,\n\"exclusion_group\": [],\n\"face_adjust_params\": [],\n\"formula_id\": \"\",\n\"id\": \"3CB3DEA4-74AD-4C7C-893C-A717DC183B22\",\n\"intensity_key\": \"\",\n\"multi_language_current\": \"\",\n\"name\": \"高清增强\",\n\"panel_id\": \"\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/artistEffect/7426668776491453707/c28d7683eb3bbc58cd3b008b380ed551\",\n\"platform\": \"all\",\n\"request_id\": \"20250701142236DCBEEA77AA61FB941FC4\",\n\"resource_id\": \"7426668776491453707\",\n\"source_platform\": 1,\n\"sub_type\": \"none\",\n\"time_range\": null,\n\"type\": \"filter\",\n\"value\": 1.0,\n\"version\": \"\"\n}",
+        "url": "https://mogic-algo-data.oss-cn-hangzhou.aliyuncs.com/batch-video/res/c28d7683eb3bbc58cd3b008b380ed551.gif"
+    }
+}

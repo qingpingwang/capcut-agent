@@ -1,0 +1,17 @@
+{
+    "便利贴": {
+        "desc": "分类：入场\n名称：便利贴",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"in\",\n\"category_name\": \"入场\",\n\"duration\": 900000,\n\"id\": \"70486392\",\n\"material_type\": \"video\",\n\"name\": \"便利贴\",\n\"panel\": \"video\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/70486392/336cef662cea20689ee442d6caad5e90\",\n\"platform\": \"all\",\n\"request_id\": \"202507081638515CD2845037901B6815F5\",\n\"resource_id\": \"7379456870265655859\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E4%BE%BF%E5%88%A9%E8%B4%B4-336cef662cea20689ee442d6caad5e90.gif"
+    },
+    "展开": {
+        "desc": "分类：入场\n名称：展开",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"in\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"12088589\",\n\"material_type\": \"video\",\n\"name\": \"展开\",\n\"panel\": \"video\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/12088589/1dddfd30d0529fb869d65bcdccb9f9bf\",\n\"platform\": \"all\",\n\"request_id\": \"202507091037170EA501047F3DC4250419\",\n\"resource_id\": \"7221413342257091133\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%B1%95%E5%BC%80-1dddfd30d0529fb869d65bcdccb9f9bf.gif"
+    },
+    "动感缩小": {
+        "desc": "分类：入场\n名称：动感缩小",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"in\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"431658\",\n\"material_type\": \"video\",\n\"name\": \"动感缩小\",\n\"panel\": \"video\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/431658/e56f817fa70322c96e33c0df458ab1ea\",\n\"platform\": \"all\",\n\"request_id\": \"202507091037170EA501047F3DC4250419\",\n\"resource_id\": \"6740868384637850120\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%8A%A8%E6%84%9F%E7%BC%A9%E5%B0%8F-e56f817fa70322c96e33c0df458ab1ea.gif"
+    }
+}

@@ -1,0 +1,25 @@
+# Core Dependencies
+flask>=3.0.0
+flask-cors>=4.0.0
+python-dotenv>=1.0.0
+langchain>=1.2.0
+langchain-openai>=1.1.0
+langchain-community>=0.3.0
+langgraph>=1.0.0
+langgraph-checkpoint-sqlite>=2.0.0
+langchain-mcp-adapters>=0.2.0
+
+# Vector Store
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+langchain-huggingface>=1.2.0  # 本地 embeddings 模型
+
+# MCP Tools
+fastmcp>=0.3.0
+
+# Framework
+fastapi>=0.115.0
+pydantic>=2.0.0
+
+# Submodule
+-e external/jy-protocol-server

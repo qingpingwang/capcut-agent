@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>视频助手对话</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#2b4bee",
+                    "background-light": "#f6f6f8",
+                    "background-dark": "#101322",
+                    "sidebar-dark": "#161b30",
+                    "bubble-agent": "#1f253e",
+                    "bubble-user": "#2b4bee",
+                },
+                fontFamily: {
+                    "display": ["Noto Sans SC", "Inter", "sans-serif"]
+                },
+                borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+            },
+        },
+    }
+</script>
+<style>
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #232948;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #3b4266;
+    }
+    
+    /* 打字动画 */
+    @keyframes typing {
+        0%, 60%, 100% { opacity: 0.7; }
+        30% { opacity: 1; }
+    }
+    
+    /* Toast 滑入动画 */
+    @keyframes slide-in {
+        from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    .animate-slide-in {
+        animation: slide-in 0.3s ease-out;
+    }
+    
+    .typing-dot {
+        animation: typing 1.4s ease-in-out infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    
+    /* 折叠状态下的样式 */
+    aside.w-12 {
+        overflow: visible;
+        position: relative;
+    }
+    
+    /* 左侧栏折叠时隐藏历史列表 */
+    #leftSidebar.w-12 #threadList {
+        display: none;
+    }
+    
+    /* 全屏模式优化 */
+    aside.w-full {
+        padding: 1rem;
+    }
+    
+    /* 可拖拽分隔条 */
+    .resizer {
+        height: 8px;
+        background: transparent;
+        cursor: ns-resize;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        flex-shrink: 0;
+    }
+    
+    .resizer:hover {
+        background: rgba(43, 75, 238, 0.1);
+    }
+    
+    .resizer::before {
+        content: '';
+        width: 40px;
+        height: 3px;
+        background: #3b4266;
+        border-radius: 2px;
+        opacity: 0.5;
+        transition: all 0.2s;
+    }
+    
+    .resizer:hover::before {
+        opacity: 1;
+        background: #2b4bee;
+        width: 60px;
+    }
+    
+    .resizer.dragging {
+        background: rgba(43, 75, 238, 0.2);
+    }
+    
+    .resizer.dragging::before {
+        background: #2b4bee;
+        opacity: 1;
+        width: 80px;
+    }
+    
+    /* 发送按钮禁用状态 */
+    #sendButton:disabled {
+        cursor: not-allowed !important;
+        pointer-events: none;
+    }
+    
+    /* ==================== Markdown 样式 ==================== */
+    /* 粗体 */
+    .message-content strong {
+        font-weight: 700;
+        color: inherit;
+    }
+    
+    /* 斜体 */
+    .message-content em {
+        font-style: italic;
+        color: inherit;
+    }
+    
+    /* 行内代码 */
+    .message-content code {
+        background: rgba(100, 116, 139, 0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', 'Consolas', monospace;
+        font-size: 0.9em;
+        color: #e879f9;
+    }
+    
+    /* 代码块 */
+    .message-content pre {
+        background: rgba(15, 23, 42, 0.5);
+        padding: 12px;
+        border-radius: 8px;
+        white-space: pre-wrap;
+        word-break: break-all;
+        overflow-x: hidden;
+        margin: 8px 0;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+    
+    .message-content pre code {
+        background: transparent;
+        padding: 0;
+        color: #94a3b8;
+    }
+    
+    /* 列表 */
+    .message-content ul,
+    .message-content ol {
+        margin: 8px 0;
+        padding-left: 24px;
+    }
+    
+    .message-content li {
+        margin-bottom: 4px;
+        line-height: 1.6;
+    }
+    
+    .message-content ul li {
+        list-style-type: disc;
+    }
+    
+    .message-content ol li {
+        list-style-type: decimal;
+    }
+    
+    /* 段落 */
+    .message-content p {
+        margin: 8px 0;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+    
+    .message-content p:first-child {
+        margin-top: 0;
+    }
+    
+    .message-content p:last-child {
+        margin-bottom: 0;
+    }
+    
+    /* 标题 */
+    .message-content h1,
+    .message-content h2,
+    .message-content h3,
+    .message-content h4,
+    .message-content h5,
+    .message-content h6 {
+        margin: 12px 0 8px 0;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    
+    .message-content h1 { font-size: 1.4em; }
+    .message-content h2 { font-size: 1.3em; }
+    .message-content h3 { font-size: 1.2em; }
+    .message-content h4 { font-size: 1.1em; }
+    
+    /* 引用块 */
+    .message-content blockquote {
+        border-left: 3px solid #2b4bee;
+        padding-left: 12px;
+        margin: 8px 0;
+        opacity: 0.9;
+        font-style: italic;
+        color: rgba(148, 163, 184, 0.9);
+    }
+    
+    /* 链接 */
+    .message-content a {
+        color: #60a5fa;
+        text-decoration: underline;
+        transition: opacity 0.2s;
+    }
+    
+    .message-content a:hover {
+        opacity: 0.8;
+    }
+    
+    /* 分隔线 */
+    .message-content hr {
+        border: none;
+        border-top: 1px solid rgba(100, 116, 139, 0.2);
+        margin: 16px 0;
+    }
+    
+    /* 表格 */
+    .message-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 8px 0;
+    }
+    
+    .message-content th,
+    .message-content td {
+        border: 1px solid rgba(100, 116, 139, 0.2);
+        padding: 8px 12px;
+        text-align: left;
+    }
+    
+    .message-content th {
+        background: rgba(43, 75, 238, 0.1);
+        font-weight: 600;
+    }
+    
+    .message-content tr:hover {
+        background: rgba(43, 75, 238, 0.05);
+    }
+</style>
+
+<!-- ⚡ 预加载样式：避免刷新闪烁 -->
+<style id="preloadStyles">
+        /* 加载遮罩 */
+        #app-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgb(15, 23, 42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.2s ease-out;
+        }
+        
+        /* 加载动画 */
+        #app-loader .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            border-top-color: rgb(59, 130, 246);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+</style>
+
+<!-- ⚡ 预应用 UI 状态：在 DOM 渲染前应用全屏状态 -->
+<script>
+(function() {
+    // 立即解析 URL 状态（在 DOM 渲染前）
+    const urlParams = new URLSearchParams(window.location.search);
+    const uiValue = parseInt(urlParams.get('ui') || '0', 10);
+    
+    // 解析状态位（只关心全屏状态）
+    const mediaFullscreen = !!(uiValue & 0b010);  // bit 1: 媒体库全屏
+    
+    if (!mediaFullscreen) return;  // 非全屏，不需要预处理
+    
+    console.log('⚡ 预应用全屏状态: ui=' + uiValue);
+    
+    // 在 DOMContentLoaded 时（渲染开始时）立即应用样式
+    document.addEventListener('DOMContentLoaded', function applyFullscreenState() {
+        const library = document.getElementById('mediaLibrary');
+        const leftSidebar = document.getElementById('leftSidebar');
+        const mainContent = document.querySelector('main');
+        
+        if (!library) return;
+        
+        // 应用媒体库全屏状态
+        library.classList.remove('w-80');
+        library.classList.add('w-full');
+        
+        if (leftSidebar) leftSidebar.style.display = 'none';
+        if (mainContent) mainContent.style.display = 'none';
+        
+        console.log('✅ 预应用：媒体库全屏');
+    }, { once: true });
+})();
+</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white h-screen flex overflow-hidden">
+
+<!-- 加载动画 -->
+<div id="app-loader">
+    <div class="spinner"></div>
+</div>
+
+<!-- 侧边栏 -->
+<aside id="leftSidebar" class="w-64 bg-white dark:bg-sidebar-dark border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0">
+    <div class="p-4 flex flex-col gap-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary/10 dark:bg-primary/20 p-2 rounded-lg text-primary">
+                    <span class="material-symbols-outlined text-2xl">movie_edit</span>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">视频助手</h1>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400">v1.0 本地版</span>
+                    </div>
+                </div>
+            </div>
+            <button id="leftSidebarCollapseBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" title="折叠侧边栏">
+                <span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span>
+            </button>
+        </div>
+        <div class="flex gap-2">
+            <button id="homeBtn" class="flex items-center justify-center gap-1.5 flex-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-[20px]">home</span>
+                <span>首页</span>
+            </button>
+            <button onclick="createNewChat()" class="flex items-center justify-center gap-1.5 flex-1 bg-primary hover:bg-primary/90 text-white font-medium py-2.5 px-3 rounded-lg transition-colors shadow-lg shadow-primary/20">
+            <span class="material-symbols-outlined text-[20px]">add</span>
+                <span>新建</span>
+        </button>
+        </div>
+    </div>
+    
+    <!-- 历史会话列表 -->
+    <div class="flex-1 overflow-y-auto px-3 py-2" id="threadList">
+        <p class="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">历史对话</p>
+        <div id="threadItems" class="flex flex-col gap-1">
+            <!-- 动态加载 -->
+        </div>
+    </div>
+</aside>
+
+<!-- 主内容区 -->
+<main class="flex-1 flex flex-col h-full relative min-w-0 overflow-hidden">
+    <!-- 头部 -->
+    <header class="h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shrink-0 bg-white dark:bg-background-dark/80 backdrop-blur-md">
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white truncate" id="chatTitle">视频助手</h2>
+        <div class="flex items-center gap-2">
+            <button onclick="deleteCurrentChat()" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 transition-colors" title="删除对话">
+                <span class="material-symbols-outlined">delete</span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- 消息区域（上部分，可调整高度） -->
+    <div class="overflow-y-auto overflow-x-hidden scroll-smooth" id="chatMessages" style="height: 60vh; min-height: 200px;">
+        <div class="w-full p-2 md:p-4 flex flex-col gap-4" id="chatMessagesInner">
+            <!-- 消息将动态添加 -->
+        </div>
+    </div>
+    
+    <!-- 可拖拽分隔条 -->
+    <div class="resizer" id="resizer"></div>
+    
+    <!-- 输入区域（下部分，flex-1 填充剩余空间） -->
+    <div class="flex-1 flex flex-col bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800" id="inputArea" style="min-height: 150px;">
+        <div class="flex flex-col p-1 md:p-2 h-full">
+            <div class="w-full flex flex-col h-full">
+                <div class="bg-white dark:bg-[#1f253e] rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden ring-1 ring-black/5 dark:ring-white/5 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-all h-full">
+                    <textarea 
+                        id="userInput"
+                        class="flex-1 w-full bg-transparent border-0 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0 p-3 md:p-4 resize-none overflow-y-auto" 
+                        placeholder="让助手编辑、剪切或添加特效...（Enter 发送 / Shift+Enter 换行 / Shift+↑↓ 历史）" 
+                    ></textarea>
+                    <div class="flex items-center justify-end px-3 pb-3 shrink-0">
+                        <button onclick="sendMessage()" id="sendButton" class="bg-primary hover:bg-primary/90 text-white rounded-lg p-2 px-5 flex items-center gap-2 text-sm font-semibold transition-all active:scale-95 shadow-md shadow-primary/20">
+                            <span>发送</span>
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 右侧媒体库 -->
+<aside id="mediaLibrary" class="w-80 bg-white dark:bg-sidebar-dark border-l border-slate-200 dark:border-slate-800 flex flex-col shrink-0">
+    <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between h-16 shrink-0">
+        <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">perm_media</span>
+            媒体库
+        </h3>
+        <div class="flex items-center gap-1">
+            <button id="mediaLibraryFullscreenBtn" class="text-slate-400 hover:text-primary dark:hover:text-primary p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" title="全屏显示">
+                <span class="material-symbols-outlined text-[20px]">open_in_full</span>
+            </button>
+            <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+            <button id="mediaLibraryCollapseBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" title="折叠库">
+                <span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_right</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- 搜索和筛选 -->
+    <div class="p-4 flex flex-col gap-3 border-b border-slate-200 dark:border-slate-800/50">
+        <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-sm">search</span>
+            <input id="mediaSearchInput" class="w-full bg-slate-100 dark:bg-[#1f253e] border-none rounded-lg py-2 pl-9 pr-4 text-xs font-medium focus:ring-1 focus:ring-primary text-slate-900 dark:text-white placeholder-slate-500" placeholder="搜索素材..." type="text"/>
+        </div>
+        <div class="flex gap-2">
+            <button data-type="all" class="media-filter-btn flex-1 py-1.5 text-xs font-medium rounded-md bg-primary text-white shadow-sm">全部</button>
+            <button data-type="video" class="media-filter-btn flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">视频</button>
+            <button data-type="audio" class="media-filter-btn flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">音频</button>
+            <button data-type="image" class="media-filter-btn flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">图片</button>
+        </div>
+    </div>
+    
+    <!-- 素材列表（动态加载） -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-3">
+        <!-- 素材将通过 JavaScript 动态加载 -->
+    </div>
+    
+    <!-- 添加素材按钮 -->
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-sidebar-dark/50">
+        <input type="file" id="mediaUploadInput" multiple accept="video/*,audio/*,image/*" class="hidden">
+        <button id="mediaUploadBtn" class="w-full py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-200 transition-all flex items-center justify-center gap-2 shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">add_circle</span>
+            添加素材
+        </button>
+    </div>
+</aside>
+
+<!-- 引入模块化 JavaScript -->
+<script type="module" src="/static/js/app.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,177 @@
+{
+    "向左模糊 II": {
+        "desc": "分类：出场\n名称：向左模糊 II",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"chuchang\",\n\"category_name\": \"出场\",\n\"duration\": 500000,\n\"id\": \"17830676\",\n\"material_type\": \"sticker\",\n\"name\": \"向左模糊 II\",\n\"panel\": \"\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/17830676/321ca3ce82eadae4edabb9f60c841769\",\n\"platform\": \"all\",\n\"request_id\": \"202507081638515A11FDE52A47AA5D0762\",\n\"resource_id\": \"7254503584732025381\",\n\"start\": 0,\n\"type\": \"out\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%90%91%E5%B7%A6%E6%A8%A1%E7%B3%8A%20II-321ca3ce82eadae4edabb9f60c841769.gif"
+    },
+    "金粉飘落": {
+        "desc": "分类：入场\n名称：金粉飘落",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"43242964\",\n\"material_type\": \"sticker\",\n\"name\": \"金粉飘落\",\n\"panel\": \"\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/43242964/5ea1a9d6e2e93949ab0d33222850941e\",\n\"platform\": \"all\",\n\"request_id\": \"2025070816385141324763823AA6733CF0\",\n\"resource_id\": \"7330561002922054196\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E9%87%91%E7%B2%89%E9%A3%98%E8%90%BD-5ea1a9d6e2e93949ab0d33222850941e.gif"
+    },
+    "弹入跳动": {
+        "desc": "分类：入场\n名称：弹入跳动",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"8058189\",\n\"material_type\": \"sticker\",\n\"name\": \"弹入跳动\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/8058189/c1572065fb14d444872f8de84a88b508\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7184797276181631546\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%BC%B9%E5%85%A5%E8%B7%B3%E5%8A%A8-c1572065fb14d444872f8de84a88b508.gif"
+    },
+    "滚入": {
+        "desc": "分类：入场\n名称：滚入",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 433333,\n\"id\": \"1644320\",\n\"material_type\": \"sticker\",\n\"name\": \"滚入\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644320/ce70d65072f179d39d265e7ecca34ea6\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7026674824537707038\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%BB%9A%E5%85%A5-ce70d65072f179d39d265e7ecca34ea6.gif"
+    },
+    "随机弹跳": {
+        "desc": "分类：循环\n名称：随机弹跳",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 500000,\n\"id\": \"1644538\",\n\"material_type\": \"sticker\",\n\"name\": \"随机弹跳\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644538/579ff3b2e47fc49757011edcde23e990\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"7045150354672980516\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E9%9A%8F%E6%9C%BA%E5%BC%B9%E8%B7%B3-59039a79a6fa134e0ac31c87ca2d78b9.gif"
+    },
+    "颤抖 II": {
+        "desc": "分类：循环\n名称：颤抖 II",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 1766666,\n\"id\": \"1446098\",\n\"material_type\": \"sticker\",\n\"name\": \"颤抖 II\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1446098/a2f6f76e09bb618bc9dc83a1a89bd554\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"6986920909927879199\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E9%A2%A4%E6%8A%96%20II-a2f6f76e09bb618bc9dc83a1a89bd554.gif"
+    },
+    "呐喊声波": {
+        "desc": "分类：入场\n名称：呐喊声波",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"9432429\",\n\"material_type\": \"sticker\",\n\"name\": \"呐喊声波\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/9432429/d655f9e0ac4ff9d67bcfdd2cdb6d8a51\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7199943069385364005\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%91%90%E5%96%8A%E5%A3%B0%E6%B3%A2-d655f9e0ac4ff9d67bcfdd2cdb6d8a51.gif"
+    },
+    "喷涌": {
+        "desc": "分类：循环\n名称：喷涌",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 500000,\n\"id\": \"4175399\",\n\"material_type\": \"sticker\",\n\"name\": \"喷涌\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/4175399/d48cae0ab10ec5e44509e205c8a211da\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"7134190113780666887\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%96%B7%E6%B6%8C-d48cae0ab10ec5e44509e205c8a211da.gif"
+    },
+    "放大": {
+        "desc": "分类：入场\n名称：放大",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644264\",\n\"material_type\": \"sticker\",\n\"name\": \"放大\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644264/e694f4c17470423f93efd621e99f7a45\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"6724919499042066958\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%94%BE%E5%A4%A7-e3f5159a4f9a1dcafe6ac26e4428fa97.gif"
+    },
+    "冰雪飘动": {
+        "desc": "分类：入场\n名称：冰雪飘动",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"35395178\",\n\"material_type\": \"sticker\",\n\"name\": \"冰雪飘动\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/35395178/239ee3d2159b44702224ab3dad0e0463\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7314291622525538843\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%86%B0%E9%9B%AA%E9%A3%98%E5%8A%A8-d8d66f08217bde7559941a3fc3f166f3.gif"
+    },
+    "飘起": {
+        "desc": "分类：循环\n名称：飘起",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 500000,\n\"id\": \"10749797\",\n\"material_type\": \"sticker\",\n\"name\": \"飘起\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/10749797/ba67b175e87976fceccf0a1a0032b2ef\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"7211060597352305189\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E9%A3%98%E8%B5%B7-ba67b175e87976fceccf0a1a0032b2ef.gif"
+    },
+    "向右缓入": {
+        "desc": "分类：入场\n名称：向右缓入",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1488722\",\n\"material_type\": \"sticker\",\n\"name\": \"向右缓入\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1488722/a91111348b1f985e8ba0772829ed4270\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7043778124760224292\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%90%91%E5%8F%B3%E7%BC%93%E5%85%A5-a91111348b1f985e8ba0772829ed4270.gif"
+    },
+    "左移弹动": {
+        "desc": "分类：入场\n名称：左移弹动",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"35176342\",\n\"material_type\": \"sticker\",\n\"name\": \"左移弹动\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/35176342/b4bf42fda13c3a86a30e81d444664acb\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7313890082040058406\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%B7%A6%E7%A7%BB%E5%BC%B9%E5%8A%A8-fa3f7df94e7fc6a7dfaee203590aff47.gif"
+    },
+    "颤抖": {
+        "desc": "分类：循环\n名称：颤抖",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 500000,\n\"id\": \"1644509\",\n\"material_type\": \"sticker\",\n\"name\": \"颤抖\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644509/693ebf38325180644e6afc4196a14d4a\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"6764189482871689742\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E9%A2%A4%E6%8A%96-693ebf38325180644e6afc4196a14d4a.gif"
+    },
+    "开幕": {
+        "desc": "分类：入场\n名称：开幕",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644279\",\n\"material_type\": \"sticker\",\n\"name\": \"开幕\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644279/d36ba0461bee75c0b7b5df82312329c3\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"6835571502050447879\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%BC%80%E5%B9%95-d36ba0461bee75c0b7b5df82312329c3.gif"
+    },
+    "向右露出": {
+        "desc": "分类：入场\n名称：向右露出",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"5925714\",\n\"material_type\": \"sticker\",\n\"name\": \"向右露出\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/5925714/15c385bc3346b485754622a112d54d00\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7163514730525495839\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%90%91%E5%8F%B3%E9%9C%B2%E5%87%BA-15c385bc3346b485754622a112d54d00.gif"
+    },
+    "向上弹入": {
+        "desc": "分类：入场\n名称：向上弹入",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"3704299\",\n\"material_type\": \"sticker\",\n\"name\": \"向上弹入\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/3704299/56dae21f3bf4915e783bde52578899bb\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7123116334677758501\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%90%91%E4%B8%8A%E5%BC%B9%E5%85%A5-56dae21f3bf4915e783bde52578899bb.gif"
+    },
+    "波浪弹跳": {
+        "desc": "分类：入场\n名称：波浪弹跳",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"37303562\",\n\"material_type\": \"sticker\",\n\"name\": \"波浪弹跳\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/37303562/8d82b567aadfbf2d3e1c6a078f1108ba\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7317536986691015218\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%B3%A2%E6%B5%AA%E5%BC%B9%E8%B7%B3-8d82b567aadfbf2d3e1c6a078f1108ba.gif"
+    },
+    "波浪弹入": {
+        "desc": "分类：入场\n名称：波浪弹入",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644316\",\n\"material_type\": \"sticker\",\n\"name\": \"波浪弹入\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644316/956a6d2e1757f68f5f2987a46c5163f4\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"6917178744775905806\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%B3%A2%E6%B5%AA%E5%BC%B9%E5%85%A5-956a6d2e1757f68f5f2987a46c5163f4.gif"
+    },
+    "波浪": {
+        "desc": "分类：循环\n名称：波浪",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 500000,\n\"id\": \"1644517\",\n\"material_type\": \"sticker\",\n\"name\": \"波浪\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644517/6f132e1cf89886520902b86540613bbe\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"6724927688047333891\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%B3%A2%E6%B5%AA-6f132e1cf89886520902b86540613bbe.gif"
+    },
+    "放大震动": {
+        "desc": "分类：入场\n名称：放大震动",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"20801300\",\n\"material_type\": \"sticker\",\n\"name\": \"放大震动\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/20801300/213fc942c8deb3472a31f6f8d55cab18\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7267849370727354936\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%94%BE%E5%A4%A7%E9%9C%87%E5%8A%A8-213fc942c8deb3472a31f6f8d55cab18.gif"
+    },
+    "弹性伸缩": {
+        "desc": "分类：入场\n名称：弹性伸缩",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 1033333,\n\"id\": \"1644311\",\n\"material_type\": \"sticker\",\n\"name\": \"弹性伸缩\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644311/6a03b6de2c4f5f0b04d6b41fd8139a35\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"6872642189260755463\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9-6a03b6de2c4f5f0b04d6b41fd8139a35.gif"
+    },
+    "水平翻转": {
+        "desc": "分类：入场\n名称：水平翻转",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644340\",\n\"material_type\": \"sticker\",\n\"name\": \"水平翻转\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644340/70a0e248370c0701d52c0102808717ac\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7051512227353858590\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%B0%B4%E5%B9%B3%E7%BF%BB%E8%BD%AC-98686f085e234d5b39ade0500353be22.gif"
+    },
+    "星星弹跳": {
+        "desc": "分类：入场\n名称：星星弹跳",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"31799385\",\n\"material_type\": \"sticker\",\n\"name\": \"星星弹跳\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/31799385/7615f113c3028733328fcdc81b05fa18\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7307189517562155547\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%98%9F%E6%98%9F%E5%BC%B9%E8%B7%B3-e5a1520dee5dd3700da60c62743111e4.gif"
+    },
+    "向右模糊 II": {
+        "desc": "分类：入场\n名称：向右模糊 II",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"17830700\",\n\"material_type\": \"sticker\",\n\"name\": \"向右模糊 II\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/17830700/81ffda7bd4312458d088ddd7fc78f8d5\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7254503374622560828\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%90%91%E5%8F%B3%E6%A8%A1%E7%B3%8A%20II-81ffda7bd4312458d088ddd7fc78f8d5.gif"
+    },
+    "空翻": {
+        "desc": "分类：入场\n名称：空翻",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644306\",\n\"material_type\": \"sticker\",\n\"name\": \"空翻\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644306/f7e72391d8c3f1b657a8671bb909d4bf\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"6865175746420150792\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E7%A9%BA%E7%BF%BB-66e8a042211c9b7d7040863282028cef.gif"
+    },
+    "发光模糊": {
+        "desc": "分类：入场\n名称：发光模糊",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644342\",\n\"material_type\": \"sticker\",\n\"name\": \"发光模糊\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644342/cd8ac5827c30cb0322b90bcfaaf2f741\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7054482687297327630\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%8F%91%E5%85%89%E6%A8%A1%E7%B3%8A-52c2d0becd0923da5f02ad2afa2968b7.gif"
+    },
+    "弹弓": {
+        "desc": "分类：入场\n名称：弹弓",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644305\",\n\"material_type\": \"sticker\",\n\"name\": \"弹弓\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644305/c4718f52ebb01406a546f3068747ca06\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"6862897343176380942\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%BC%B9%E5%BC%93-0934537520ec0285fec31359bec0cd4e.gif"
+    },
+    "模糊发光": {
+        "desc": "分类：入场\n名称：模糊发光",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"29690460\",\n\"material_type\": \"sticker\",\n\"name\": \"模糊发光\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/29690460/e219c97cb85aefcade97bbfd333e2128\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7301535952101446170\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%A8%A1%E7%B3%8A%E5%8F%91%E5%85%89-2354fe91edf7b5f1fbc4ef03c3c73595.gif"
+    },
+    "投影颤抖": {
+        "desc": "分类：循环\n名称：投影颤抖",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 500000,\n\"id\": \"1599698\",\n\"material_type\": \"sticker\",\n\"name\": \"投影颤抖\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1599698/8b24413219015303a355da9fb89bb90c\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"7070332284934558245\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%8A%95%E5%BD%B1%E9%A2%A4%E6%8A%96-8b24413219015303a355da9fb89bb90c.gif"
+    },
+    "生长": {
+        "desc": "分类：入场\n名称：生长",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644307\",\n\"material_type\": \"sticker\",\n\"name\": \"生长\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644307/a6a9e77486fe911cfe9f270be3c3eab8\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"6869302248103481869\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E7%94%9F%E9%95%BF-3a22faece3745803f1747b428837c3d9.gif"
+    },
+    "超强波浪": {
+        "desc": "分类：循环\n名称：超强波浪",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"xunhuan\",\n\"category_name\": \"循环\",\n\"duration\": 500000,\n\"id\": \"872098\",\n\"material_type\": \"sticker\",\n\"name\": \"超强波浪\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/872098/2be028ffcba5bc19aa99000000e0e9da\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717287A05841FD1683F9365\",\n\"resource_id\": \"6857036499389518349\",\n\"start\": 0,\n\"type\": \"loop\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E8%B6%85%E5%BC%BA%E6%B3%A2%E6%B5%AA-2be028ffcba5bc19aa99000000e0e9da.gif"
+    },
+    "缩小 II": {
+        "desc": "分类：入场\n名称：缩小 II",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"1644341\",\n\"material_type\": \"sticker\",\n\"name\": \"缩小 II\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/1644341/1328b19a87c810819a6e113f2eaee4db\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7041836555903701540\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E7%BC%A9%E5%B0%8F%20II-1328b19a87c810819a6e113f2eaee4db.gif"
+    },
+    "辉光扫描": {
+        "desc": "分类：入场\n名称：辉光扫描",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"36927710\",\n\"material_type\": \"sticker\",\n\"name\": \"辉光扫描\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/36927710/3141c3bd5630d34105e0c65d61a01f8f\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7316878401590006323\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E8%BE%89%E5%85%89%E6%89%AB%E6%8F%8F-3141c3bd5630d34105e0c65d61a01f8f.gif"
+    },
+    "跃进": {
+        "desc": "分类：入场\n名称：跃进",
+        "content": "{\n\"anim_adjust_params\": null,\n\"category_id\": \"ruchang\",\n\"category_name\": \"入场\",\n\"duration\": 500000,\n\"id\": \"11996999\",\n\"material_type\": \"sticker\",\n\"name\": \"跃进\",\n\"panel\": \"\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/11996999/e060bd05802a5fe09bf38b6ad08b9004\",\n\"platform\": \"all\",\n\"request_id\": \"20250709103717CBECB0439A1A5B33CC2B\",\n\"resource_id\": \"7220685840442200634\",\n\"start\": 0,\n\"type\": \"in\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E8%B7%83%E8%BF%9B-e060bd05802a5fe09bf38b6ad08b9004.gif"
+    }
+}

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>视频助手对话</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b4bee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                        "sidebar-dark": "#161b30", // Slightly lighter than main bg
+                        "bubble-agent": "#1f253e",
+                        "bubble-user": "#2b4bee",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans SC", "Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232948;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4266;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white h-screen flex overflow-hidden">
+<aside class="w-64 bg-white dark:bg-sidebar-dark border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 transition-all duration-300 relative group">
+<div class="p-4 flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 dark:bg-primary/20 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined text-2xl">movie_edit</span>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-tight">视频助手</h1>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-xs text-slate-500 dark:text-slate-400">v1.0 本地版</span>
+</div>
+</div>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 p-1 rounded hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" title="折叠侧边栏">
+<span class="material-symbols-outlined">menu_open</span>
+</button>
+</div>
+<button class="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-white font-medium py-2.5 px-4 rounded-lg transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>新建项目</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-3 py-2">
+<div class="mb-6">
+<p class="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">今天</p>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 p-3 w-full rounded-lg bg-slate-100 dark:bg-[#232948] group text-left transition-colors">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-300">movie</span>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-medium truncate text-slate-900 dark:text-white">Vlog 剪辑 - 东京</p>
+</div>
+<span class="material-symbols-outlined text-[18px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</span>
+</button>
+</div>
+</div>
+<div class="mb-6">
+<p class="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">昨天</p>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 p-3 w-full rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 group text-left transition-colors">
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500">movie</span>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-medium truncate text-slate-700 dark:text-slate-300">企业介绍 V2</p>
+</div>
+</button>
+<button class="flex items-center gap-3 p-3 w-full rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 group text-left transition-colors">
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500">movie</span>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-medium truncate text-slate-700 dark:text-slate-300">精彩集锦 01</p>
+</div>
+</button>
+</div>
+</div>
+<div class="mb-6">
+<p class="px-3 mb-2 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">过去 7 天</p>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 p-3 w-full rounded-lg hover:bg-slate-50 dark:hover:bg-white/5 group text-left transition-colors">
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500">movie</span>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-medium truncate text-slate-700 dark:text-slate-300">社媒短视频</p>
+</div>
+</button>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<button class="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-left">
+<div class="w-8 h-8 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-300 text-lg">person</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-slate-900 dark:text-white">管理员</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">设置</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">settings</span>
+</button>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full relative min-w-0">
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shrink-0 bg-white dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-10">
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white truncate">Vlog 剪辑 - 东京</h2>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors mr-2" title="切换素材面板">
+<span class="material-symbols-outlined text-[20px]">video_library</span>
+<span class="text-sm font-medium hidden sm:inline">素材</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 transition-colors" title="导出">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 transition-colors" title="项目信息">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col gap-6 scroll-smooth">
+<div class="flex justify-end gap-4 w-full animate-fade-in-up">
+<div class="flex flex-col items-end gap-1 max-w-[80%] md:max-w-[70%]">
+<div class="bg-primary text-white px-5 py-3.5 rounded-2xl rounded-tr-sm shadow-md">
+<p class="text-sm md:text-base leading-relaxed">我上传了东京旅行的原始素材。你能帮我挑出最好的镜头并去除抖动的部分吗？</p>
+</div>
+<span class="text-xs text-slate-400 mr-1">上午 10:23</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+</div>
+<div class="flex justify-start gap-4 w-full">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20">
+<span class="material-symbols-outlined text-white text-sm">smart_toy</span>
+</div>
+<div class="flex flex-col items-start gap-1 max-w-[80%] md:max-w-[70%]">
+<div class="bg-white dark:bg-bubble-agent border border-slate-100 dark:border-slate-700/50 text-slate-900 dark:text-slate-100 px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm">
+<p class="text-sm md:text-base leading-relaxed mb-3">没问题！我已经分析了素材。大概有45分钟的原始视频。我识别出了12个稳定且高质量的片段。</p>
+<div class="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-black/20 mb-3">
+<div class="relative aspect-video w-full bg-slate-800" data-alt="abstract video timeline preview with purple waveforms" style="background-image: linear-gradient(to right, #1e293b, #0f172a);">
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-white/50">play_circle</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/60 px-2 py-0.5 rounded text-xs text-white font-mono">03:42</div>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-sidebar-dark flex items-center justify-between">
+<div>
+<p class="text-xs font-bold text-slate-700 dark:text-slate-300">稳定片段预览</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400">12 个片段 • 1080p</p>
+</div>
+<button class="text-primary text-xs font-medium hover:underline">查看详情</button>
+</div>
+</div>
+<p class="text-sm md:text-base leading-relaxed">你需要我按时间顺序进行粗剪，还是按地点分组？</p>
+</div>
+<span class="text-xs text-slate-400 ml-1">上午 10:24</span>
+</div>
+</div>
+<div class="flex justify-end gap-4 w-full">
+<div class="flex flex-col items-end gap-1 max-w-[80%] md:max-w-[70%]">
+<div class="bg-primary text-white px-5 py-3.5 rounded-2xl rounded-tr-sm shadow-md">
+<p class="text-sm md:text-base leading-relaxed">按地点分组吧。另外加点 Lo-Fi 背景音乐。</p>
+</div>
+<span class="text-xs text-slate-400 mr-1">上午 10:25</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+</div>
+<div class="flex justify-start gap-4 w-full">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20">
+<span class="material-symbols-outlined text-white text-sm">smart_toy</span>
+</div>
+<div class="flex flex-col items-start gap-1 max-w-[80%] md:max-w-[70%]">
+<div class="bg-white dark:bg-bubble-agent border border-slate-100 dark:border-slate-700/50 text-slate-900 dark:text-slate-100 px-5 py-4 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-3">
+<div class="flex space-x-1">
+<div class="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style="animation-delay: 0ms;"></div>
+<div class="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style="animation-delay: 150ms;"></div>
+<div class="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style="animation-delay: 300ms;"></div>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">正在处理片段并搜索音乐...</p>
+</div>
+</div>
+</div>
+<div class="h-24"></div>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-4 md:px-8 md:pb-6 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark dark:to-transparent pt-10">
+<div class="max-w-4xl mx-auto relative">
+<div class="bg-white dark:bg-[#1f253e] rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden ring-1 ring-black/5 dark:ring-white/5 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-all">
+<textarea class="w-full bg-transparent border-0 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0 p-4 resize-none min-h-[56px] max-h-[200px]" placeholder="让助手编辑、剪切或添加特效..." rows="1"></textarea>
+<div class="flex items-center justify-between px-2 pb-2">
+<div class="flex items-center gap-1">
+<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors" title="上传视频">
+<span class="material-symbols-outlined text-[20px]">movie</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors" title="上传音频">
+<span class="material-symbols-outlined text-[20px]">music_note</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors" title="设置">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white rounded-lg p-2 px-4 flex items-center gap-2 text-sm font-semibold transition-transform active:scale-95">
+<span>发送</span>
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+<p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-2">
+                    视频助手可能会犯错。请检查生成的编辑内容。
+                </p>
+</div>
+</div>
+</main>
+<aside class="w-80 bg-white dark:bg-sidebar-dark border-l border-slate-200 dark:border-slate-800 flex flex-col shrink-0 transition-all duration-300">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between h-16 shrink-0">
+<h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">perm_media</span>
+                媒体库
+            </h3>
+<div class="flex items-center gap-1">
+<button class="text-slate-400 hover:text-primary dark:hover:text-primary p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" title="全屏显示">
+<span class="material-symbols-outlined text-[20px]">open_in_full</span>
+</button>
+<div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" title="折叠库">
+<span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_right</span>
+</button>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-3 border-b border-slate-200 dark:border-slate-800/50">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-sm">search</span>
+<input class="w-full bg-slate-100 dark:bg-[#1f253e] border-none rounded-lg py-2 pl-9 pr-4 text-xs font-medium focus:ring-1 focus:ring-primary text-slate-900 dark:text-white placeholder-slate-500" placeholder="搜索素材..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-1.5 text-xs font-medium rounded-md bg-primary text-white shadow-sm">全部</button>
+<button class="flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">视频</button>
+<button class="flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">音频</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-3">
+<div class="group bg-white dark:bg-[#232948] rounded-lg p-2 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary transition-all cursor-pointer shadow-sm">
+<div class="aspect-video w-full bg-slate-200 dark:bg-slate-900 rounded overflow-hidden relative mb-2">
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 z-10">
+<span class="material-symbols-outlined text-white text-3xl drop-shadow-lg">play_arrow</span>
+</div>
+<div class="w-full h-full bg-gradient-to-br from-blue-900 to-slate-800 opacity-80"></div>
+<span class="absolute bottom-1 right-1 text-[10px] font-mono bg-black/70 text-white px-1.5 py-0.5 rounded">05:23</span>
+</div>
+<div class="flex justify-between items-start gap-2">
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate" title="东京原始素材.mp4">东京原始素材.mp4</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">845 MB • 4K 60帧</p>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">more_vert</span>
+</button>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#232948] rounded-lg p-2 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary transition-all cursor-pointer shadow-sm">
+<div class="aspect-video w-full bg-slate-200 dark:bg-slate-900 rounded overflow-hidden relative mb-2">
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 z-10">
+<span class="material-symbols-outlined text-white text-3xl drop-shadow-lg">play_arrow</span>
+</div>
+<div class="w-full h-full bg-gradient-to-tr from-purple-900 to-indigo-900 opacity-80"></div>
+<span class="absolute bottom-1 right-1 text-[10px] font-mono bg-black/70 text-white px-1.5 py-0.5 rounded">01:12</span>
+</div>
+<div class="flex justify-between items-start gap-2">
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate" title="涩谷十字路口.mp4">涩谷十字路口.mp4</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">120 MB • 1080p</p>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">more_vert</span>
+</button>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#232948] rounded-lg p-2 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary transition-all cursor-pointer shadow-sm">
+<div class="aspect-[3/1] w-full bg-slate-100 dark:bg-slate-800 rounded overflow-hidden relative mb-2 flex items-center justify-center">
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/10 z-10">
+<span class="material-symbols-outlined text-slate-900 dark:text-white text-2xl drop-shadow-sm">play_arrow</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-3xl">graphic_eq</span>
+<span class="absolute bottom-1 right-1 text-[10px] font-mono bg-slate-200 dark:bg-black/70 text-slate-600 dark:text-white px-1.5 py-0.5 rounded">02:45</span>
+</div>
+<div class="flex justify-between items-start gap-2">
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate" title="Lofi_轻音乐.mp3">Lofi_轻音乐.mp3</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">音频 • MP3</p>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">more_vert</span>
+</button>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#232948] rounded-lg p-2 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary transition-all cursor-pointer shadow-sm">
+<div class="aspect-video w-full bg-slate-200 dark:bg-slate-900 rounded overflow-hidden relative mb-2">
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 z-10">
+<span class="material-symbols-outlined text-white text-3xl drop-shadow-lg">play_arrow</span>
+</div>
+<div class="w-full h-full bg-gradient-to-bl from-orange-900 to-red-900 opacity-60"></div>
+<span class="absolute bottom-1 right-1 text-[10px] font-mono bg-black/70 text-white px-1.5 py-0.5 rounded">10:05</span>
+</div>
+<div class="flex justify-between items-start gap-2">
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate" title="采访_机位A.mp4">采访_机位A.mp4</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">1.2 GB • 4K</p>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-sidebar-dark/50">
+<button class="w-full py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-200 transition-all flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                添加素材
+            </button>
+</div>
+</aside>
+</body></html>

@@ -1,0 +1,3 @@
+[submodule "external/jianying-protocol-service"]
+	path = external/jianying-protocol-service
+	url = git@github.com:qingpingwang/jianying-protocol-service.git

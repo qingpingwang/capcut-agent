@@ -1,0 +1,37 @@
+{
+    "推近 II": {
+        "desc": "分类：热门\n名称：推近 II",
+        "content": "{\n\"category_id\": \"39663\",\n\"category_name\": \"热门\",\n\"duration\": 866666,\n\"effect_id\": \"26135688\",\n\"id\": \"34EE7740-C510-4165-A8CD-C36AB99ADF6A\",\n\"is_overlap\": true,\n\"name\": \"推近 II\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/26135688/94815943a86e741a5fec1737fbb46d60\",\n\"platform\": \"all\",\n\"request_id\": \"202506291624344CB1B5E1AB686C3140FC\",\n\"resource_id\": \"7290852476259930685\",\n\"type\": \"transition\"\n}",
+        "url": "https://mogic-algo-data.oss-cn-hangzhou.aliyuncs.com/batch-video/res/94815943a86e741a5fec1737fbb46d60.gif"
+    },
+    "滚动立方": {
+        "desc": "分类：热门\n名称：滚动立方",
+        "content": "{\n\"category_id\": \"39663\",\n\"category_name\": \"热门\",\n\"duration\": 733333,\n\"effect_id\": \"105115378\",\n\"id\": \"A7BCD309-AC22-4474-8C68-9CFE9821881C\",\n\"is_overlap\": true,\n\"name\": \"滚动立方\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/105115378/376cd96ec36e56b7ea5b921f402fa7f3\",\n\"platform\": \"all\",\n\"request_id\": \"20250702101854C5DF4AAF784FB68FB2CB\",\n\"resource_id\": \"7471167302029808138\",\n\"type\": \"transition\"\n}",
+        "url": "https://mogic-algo-data.oss-cn-hangzhou.aliyuncs.com/batch-video/res/376cd96ec36e56b7ea5b921f402fa7f3.gif"
+    },
+    "缤纷彩带": {
+        "desc": "分类：收藏\n名称：缤纷彩带",
+        "content": "{\n\"adjust_params\": [\n{\n\"default_value\": 0.33333333333333,\n\"name\": \"effects_adjust_speed\",\n\"value\": 0.33333333333333\n}\n],\n\"algorithm_artifact_path\": \"\",\n\"apply_target_type\": 2,\n\"apply_time_range\": null,\n\"category_id\": \"107\",\n\"category_name\": \"收藏\",\n\"common_keyframes\": [],\n\"disable_effect_faces\": [],\n\"effect_id\": \"95320463\",\n\"formula_id\": \"\",\n\"id\": \"0EBF9FF2-02CC-4563-BE11-F8BDE5320CBA\",\n\"name\": \"缤纷彩带\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/95320463/bd76e2e89ffe2698d6e2f15a0e7918fa\",\n\"platform\": \"all\",\n\"render_index\": 0,\n\"request_id\": \"\",\n\"resource_id\": \"7445177785405936138\",\n\"source_platform\": 0,\n\"time_range\": null,\n\"track_render_index\": 0,\n\"type\": \"video_effect\",\n\"value\": 1.0,\n\"version\": \"\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E7%BC%A4%E7%BA%B7%E5%BD%A9%E5%B8%A6-no_cover.gif"
+    },
+    "叠化": {
+        "desc": "分类：转场效果\n名称：叠化",
+        "content": "{\n\"category_id\": \"123456\",\n\"category_name\": \"转场效果\",\n\"duration\": 466666,\n\"effect_id\": \"322577\",\n\"id\": \"00D5920C-8C80-4CDB-8D8E-A1F10452AA25\",\n\"is_overlap\": true,\n\"name\": \"叠化\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/322577/2d641adc4bb63e37e3a0067d8c8cc3c3\",\n\"platform\": \"all\",\n\"request_id\": \"202507091514454A7951E55C0D846F701E\",\n\"resource_id\": \"6724845717472416269\",\n\"type\": \"transition\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E5%8F%A0%E5%8C%96-2d641adc4bb63e37e3a0067d8c8cc3c3.gif"
+    },
+    "金粉": {
+        "desc": "分类：heycan_search_special_effect\n名称：金粉",
+        "content": "{\n\"adjust_params\": [\n{\n\"default_value\": 0.33,\n\"name\": \"effects_adjust_speed\",\n\"value\": 0.33\n},\n{\n\"default_value\": 1.0,\n\"name\": \"effects_adjust_background_animation\",\n\"value\": 1.0\n}\n],\n\"algorithm_artifact_path\": \"\",\n\"apply_target_type\": 2,\n\"apply_time_range\": null,\n\"category_id\": \"heycan_search_special_effect\",\n\"category_name\": \"heycan_search_special_effect\",\n\"common_keyframes\": [],\n\"disable_effect_faces\": [],\n\"effect_id\": \"631215\",\n\"formula_id\": \"\",\n\"id\": \"037274B7-1BEC-43E6-B815-6CA4176FA7B7\",\n\"name\": \"金粉\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/631215/0443a82ca7b709b643abaf8da7051cca\",\n\"platform\": \"all\",\n\"render_index\": 0,\n\"request_id\": \"\",\n\"resource_id\": \"6709706378702754312\",\n\"source_platform\": 0,\n\"time_range\": null,\n\"track_render_index\": 0,\n\"type\": \"video_effect\",\n\"value\": 1.0,\n\"version\": \"\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E9%87%91%E7%B2%89-no_cover.gif"
+    },
+    "星星变焦": {
+        "desc": "分类：转场效果\n名称：星星变焦",
+        "content": "{\n\"category_id\": \"123456\",\n\"category_name\": \"转场效果\",\n\"duration\": 466666,\n\"effect_id\": \"98464024\",\n\"id\": \"4493D6B0-66B8-44D8-A575-BCF87B34BC38\",\n\"is_overlap\": true,\n\"name\": \"星星变焦\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/98464024/7eeeca7c07e67b54519995ebdf71d6fc\",\n\"platform\": \"all\",\n\"request_id\": \"202507091514454A7951E55C0D846F701E\",\n\"resource_id\": \"7452559875839627786\",\n\"type\": \"transition\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%98%9F%E6%98%9F%E5%8F%98%E7%84%A6-7eeeca7c07e67b54519995ebdf71d6fc.gif"
+    },
+    "拉远": {
+        "desc": "分类：转场效果\n名称：拉远",
+        "content": "{\n\"category_id\": \"123456\",\n\"category_name\": \"转场效果\",\n\"duration\": 466666,\n\"effect_id\": \"359365\",\n\"id\": \"366CF4AD-D5E5-4C0E-8C91-EC3E3A064583\",\n\"is_overlap\": false,\n\"name\": \"拉远\",\n\"path\": \"/Users/who/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/359365/9661d5321722495c0a98959a0d617b0f\",\n\"platform\": \"all\",\n\"request_id\": \"202507091514454A7951E55C0D846F701E\",\n\"resource_id\": \"6724226338418332167\",\n\"type\": \"transition\"\n}",
+        "url": "https://mogic-algo-data.getmogic.com/jy-resources/image/%E6%8B%89%E8%BF%9C-9661d5321722495c0a98959a0d617b0f.gif"
+    }
+}
