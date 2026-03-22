@@ -21,5 +21,6 @@ fastmcp>=0.3.0
 fastapi>=0.115.0
 pydantic>=2.0.0
 
-# Submodule
--e external/jy-protocol-server
+# 剪映协议子模块（MCP 子进程加载 external/jianying-protocol-service 时需要）
+oss2>=2.18.4
+readerwriterlock>=1.0.9

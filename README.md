@@ -95,7 +95,7 @@ OPENAI_API_KEY=your-api-key-here
 python server.py
 ```
 
-🎉 服务将运行在 `http://localhost:5000`，在浏览器中打开即可使用！
+🎉 服务将运行在 `http://localhost:5001`，在浏览器中打开即可使用！
 
 ### 5. 停止服务
 
@@ -107,7 +107,7 @@ python server.py
 
 ### 创建新对话
 
-1. 访问 `http://localhost:5000`
+1. 访问 `http://localhost:5001`
 2. 点击「新建项目」按钮
 3. 在聊天框中输入你的剪辑需求
 

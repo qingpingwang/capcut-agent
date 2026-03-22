@@ -1,25 +1,28 @@
 import os
 import sys
 from pathlib import Path
-from mcp.server.fastmcp import FastMCP
 from typing import Optional, Union
-from utils.models import JianYingInternalMaterialInfo
-from dotenv import load_dotenv
 import re
+
+from dotenv import load_dotenv
+from mcp.server.fastmcp import FastMCP
 
 # 加载环境变量（在导入子模块之前，确保 OSS_AK/OSS_SK 等可用）
 load_dotenv()
-os.environ["JY_Res_Dir"] = str(Path(__file__).parent.parent.parent / "data")
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+os.environ["JY_Res_Dir"] = str(PROJECT_ROOT / "data")
 
 # 将项目根目录添加到 Python 搜索路径（确保能导入 rag 模块）
-PROJECT_ROOT = Path(__file__).parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-# 将 jy-protocol-server/src 添加到 Python 搜索路径
-EXTERNAL_SRC = PROJECT_ROOT / 'external' / 'jy-protocol-server' / 'src'
+# 将剪映协议服务 src 加入路径（子模块目录名与 .gitmodules 一致）
+EXTERNAL_SRC = PROJECT_ROOT / "external" / "jianying-protocol-service" / "src"
 if str(EXTERNAL_SRC) not in sys.path:
     sys.path.insert(0, str(EXTERNAL_SRC))
+
+from utils.models import JianYingInternalMaterialInfo
 
 # 导入 TaskManager
 from task_manager import TaskManager
