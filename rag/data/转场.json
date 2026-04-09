@@ -2,12 +2,12 @@
     "推近 II": {
         "desc": "分类：热门\n名称：推近 II",
         "content": "{\n\"category_id\": \"39663\",\n\"category_name\": \"热门\",\n\"duration\": 866666,\n\"effect_id\": \"26135688\",\n\"id\": \"34EE7740-C510-4165-A8CD-C36AB99ADF6A\",\n\"is_overlap\": true,\n\"name\": \"推近 II\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/26135688/94815943a86e741a5fec1737fbb46d60\",\n\"platform\": \"all\",\n\"request_id\": \"202506291624344CB1B5E1AB686C3140FC\",\n\"resource_id\": \"7290852476259930685\",\n\"type\": \"transition\"\n}",
-        "url": "https://mogic-algo-data.oss-cn-hangzhou.aliyuncs.com/batch-video/res/94815943a86e741a5fec1737fbb46d60.gif"
+        "url": "https://mogic-algo-data.getmogic.com/batch-video/res/94815943a86e741a5fec1737fbb46d60.gif"
     },
     "滚动立方": {
         "desc": "分类：热门\n名称：滚动立方",
         "content": "{\n\"category_id\": \"39663\",\n\"category_name\": \"热门\",\n\"duration\": 733333,\n\"effect_id\": \"105115378\",\n\"id\": \"A7BCD309-AC22-4474-8C68-9CFE9821881C\",\n\"is_overlap\": true,\n\"name\": \"滚动立方\",\n\"path\": \"/Users/beyond-today/Library/Containers/com.lemon.lvpro/Data/Movies/JianyingPro/User Data/Cache/effect/105115378/376cd96ec36e56b7ea5b921f402fa7f3\",\n\"platform\": \"all\",\n\"request_id\": \"20250702101854C5DF4AAF784FB68FB2CB\",\n\"resource_id\": \"7471167302029808138\",\n\"type\": \"transition\"\n}",
-        "url": "https://mogic-algo-data.oss-cn-hangzhou.aliyuncs.com/batch-video/res/376cd96ec36e56b7ea5b921f402fa7f3.gif"
+        "url": "https://mogic-algo-data.getmogic.com/batch-video/res/376cd96ec36e56b7ea5b921f402fa7f3.gif"
     },
     "缤纷彩带": {
         "desc": "分类：收藏\n名称：缤纷彩带",
