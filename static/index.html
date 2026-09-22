@@ -4,26 +4,26 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>视频助手对话</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link href="/static/css/chat.css" rel="stylesheet"/>
 <script id="tailwind-config">
     tailwind.config = {
         darkMode: "class",
         theme: {
             extend: {
                 colors: {
-                    "primary": "#2b4bee",
+                    "primary": "#4b72f9",
                     "background-light": "#f6f6f8",
-                    "background-dark": "#101322",
-                    "sidebar-dark": "#161b30",
+                    "background-dark": "#11141b",
+                    "sidebar-dark": "#171b24",
                     "bubble-agent": "#1f253e",
-                    "bubble-user": "#2b4bee",
+                    "bubble-user": "#4b72f9",
                 },
                 fontFamily: {
-                    "display": ["Noto Sans SC", "Inter", "sans-serif"]
+                    "display": ["Manrope", "Noto Sans SC", "sans-serif"]
                 },
                 borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
             },
@@ -89,199 +89,6 @@
         padding: 1rem;
     }
     
-    /* 可拖拽分隔条 */
-    .resizer {
-        height: 8px;
-        background: transparent;
-        cursor: ns-resize;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s;
-        flex-shrink: 0;
-    }
-    
-    .resizer:hover {
-        background: rgba(43, 75, 238, 0.1);
-    }
-    
-    .resizer::before {
-        content: '';
-        width: 40px;
-        height: 3px;
-        background: #3b4266;
-        border-radius: 2px;
-        opacity: 0.5;
-        transition: all 0.2s;
-    }
-    
-    .resizer:hover::before {
-        opacity: 1;
-        background: #2b4bee;
-        width: 60px;
-    }
-    
-    .resizer.dragging {
-        background: rgba(43, 75, 238, 0.2);
-    }
-    
-    .resizer.dragging::before {
-        background: #2b4bee;
-        opacity: 1;
-        width: 80px;
-    }
-    
-    /* 发送按钮禁用状态 */
-    #sendButton:disabled {
-        cursor: not-allowed !important;
-        pointer-events: none;
-    }
-    
-    /* ==================== Markdown 样式 ==================== */
-    /* 粗体 */
-    .message-content strong {
-        font-weight: 700;
-        color: inherit;
-    }
-    
-    /* 斜体 */
-    .message-content em {
-        font-style: italic;
-        color: inherit;
-    }
-    
-    /* 行内代码 */
-    .message-content code {
-        background: rgba(100, 116, 139, 0.1);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: 'Courier New', 'Consolas', monospace;
-        font-size: 0.9em;
-        color: #e879f9;
-    }
-    
-    /* 代码块 */
-    .message-content pre {
-        background: rgba(15, 23, 42, 0.5);
-        padding: 12px;
-        border-radius: 8px;
-        white-space: pre-wrap;
-        word-break: break-all;
-        overflow-x: hidden;
-        margin: 8px 0;
-        border: 1px solid rgba(100, 116, 139, 0.2);
-    }
-    
-    .message-content pre code {
-        background: transparent;
-        padding: 0;
-        color: #94a3b8;
-    }
-    
-    /* 列表 */
-    .message-content ul,
-    .message-content ol {
-        margin: 8px 0;
-        padding-left: 24px;
-    }
-    
-    .message-content li {
-        margin-bottom: 4px;
-        line-height: 1.6;
-    }
-    
-    .message-content ul li {
-        list-style-type: disc;
-    }
-    
-    .message-content ol li {
-        list-style-type: decimal;
-    }
-    
-    /* 段落 */
-    .message-content p {
-        margin: 8px 0;
-        line-height: 1.6;
-        overflow-wrap: anywhere;
-        word-break: normal;
-    }
-    
-    .message-content p:first-child {
-        margin-top: 0;
-    }
-    
-    .message-content p:last-child {
-        margin-bottom: 0;
-    }
-    
-    /* 标题 */
-    .message-content h1,
-    .message-content h2,
-    .message-content h3,
-    .message-content h4,
-    .message-content h5,
-    .message-content h6 {
-        margin: 12px 0 8px 0;
-        font-weight: 700;
-        line-height: 1.3;
-    }
-    
-    .message-content h1 { font-size: 1.4em; }
-    .message-content h2 { font-size: 1.3em; }
-    .message-content h3 { font-size: 1.2em; }
-    .message-content h4 { font-size: 1.1em; }
-    
-    /* 引用块 */
-    .message-content blockquote {
-        border-left: 3px solid #2b4bee;
-        padding-left: 12px;
-        margin: 8px 0;
-        opacity: 0.9;
-        font-style: italic;
-        color: rgba(148, 163, 184, 0.9);
-    }
-    
-    /* 链接 */
-    .message-content a {
-        color: #60a5fa;
-        text-decoration: underline;
-        transition: opacity 0.2s;
-    }
-    
-    .message-content a:hover {
-        opacity: 0.8;
-    }
-    
-    /* 分隔线 */
-    .message-content hr {
-        border: none;
-        border-top: 1px solid rgba(100, 116, 139, 0.2);
-        margin: 16px 0;
-    }
-    
-    /* 表格 */
-    .message-content table {
-        border-collapse: collapse;
-        width: 100%;
-        margin: 8px 0;
-    }
-    
-    .message-content th,
-    .message-content td {
-        border: 1px solid rgba(100, 116, 139, 0.2);
-        padding: 8px 12px;
-        text-align: left;
-    }
-    
-    .message-content th {
-        background: rgba(43, 75, 238, 0.1);
-        font-weight: 600;
-    }
-    
-    .message-content tr:hover {
-        background: rgba(43, 75, 238, 0.05);
-    }
 </style>
 
 <!-- ⚡ 预加载样式：避免刷新闪烁 -->
@@ -410,33 +217,25 @@
         </div>
     </header>
     
-    <!-- 消息区域（上部分，可调整高度） -->
-    <div class="overflow-y-auto overflow-x-hidden scroll-smooth" id="chatMessages" style="height: 60vh; min-height: 200px;">
-        <div class="w-full p-2 md:p-4 flex flex-col gap-4" id="chatMessagesInner">
-            <!-- 消息将动态添加 -->
+    <div id="chatViewport" class="chat-viewport">
+        <div id="chatMessages" class="chat-scroll" tabindex="0" aria-label="对话记录">
+            <div id="chatMessagesInner" class="chat-transcript"></div>
         </div>
+        <button id="scrollToLatest" class="scroll-to-latest" type="button" aria-label="回到最新消息" hidden>
+            <span class="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
+            <span>回到最新</span>
+        </button>
     </div>
-    
-    <!-- 可拖拽分隔条 -->
-    <div class="resizer" id="resizer"></div>
-    
-    <!-- 输入区域（下部分，flex-1 填充剩余空间） -->
-    <div class="flex-1 flex flex-col bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800" id="inputArea" style="min-height: 150px;">
-        <div class="flex flex-col p-1 md:p-2 h-full">
-            <div class="w-full flex flex-col h-full">
-                <div class="bg-white dark:bg-[#1f253e] rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden ring-1 ring-black/5 dark:ring-white/5 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-all h-full">
-                    <textarea 
-                        id="userInput"
-                        class="flex-1 w-full bg-transparent border-0 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0 p-3 md:p-4 resize-none overflow-y-auto" 
-                        placeholder="让助手编辑、剪切或添加特效...（Enter 发送 / Shift+Enter 换行 / Shift+↑↓ 历史）" 
-                    ></textarea>
-                    <div class="flex items-center justify-end px-3 pb-3 shrink-0">
-                        <button onclick="sendMessage()" id="sendButton" class="bg-primary hover:bg-primary/90 text-white rounded-lg p-2 px-5 flex items-center gap-2 text-sm font-semibold transition-all active:scale-95 shadow-md shadow-primary/20">
-                            <span>发送</span>
-                            <span class="material-symbols-outlined text-[18px]">send</span>
-                        </button>
-                    </div>
-                </div>
+    <div id="composerResizeHandle" class="composer-resize-handle" role="separator" aria-orientation="horizontal" aria-label="调整输入区高度" tabindex="0" title="上下拖动调整输入区高度，双击恢复默认"></div>
+    <div id="inputArea" class="chat-composer">
+        <div class="composer-box">
+            <textarea id="userInput" class="composer-input" rows="2" aria-label="消息" placeholder="描述你想要的视频，或继续调整剪辑…"></textarea>
+            <div class="composer-footer">
+                <span class="composer-hint">Enter 发送 · Shift + Enter 换行</span>
+                <button id="sendButton" class="composer-send" type="button" title="发送消息" disabled>
+                    <span>发送</span>
+                    <span class="material-symbols-outlined" aria-hidden="true">arrow_upward</span>
+                </button>
             </div>
         </div>
     </div>
@@ -494,4 +293,3 @@
 
 </body>
 </html>
-

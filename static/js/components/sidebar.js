@@ -1,10 +1,16 @@
 // ==================== 左侧栏组件 ====================
-import { generateUUID, API_BASE, HTTP, saveUIState, getUIStateFromURL, UI_STATE, DOM, createNewChat } from '../utils.js';
+import { saveUIState, getUIStateFromURL, DOM, createNewChat, navigateTo } from '../utils.js';
+import { relativeTime, threadIndicator } from '../chat/thread-state.js';
 
 export class Sidebar {
-    constructor() {
+    constructor(store) {
+        this.store = store;
         this.currentThreadId = null;
         this.collapsed = false;
+        this.unsubscribe = store.subscribe((threads, reason) => {
+            if (reason === 'clock') this.updateTimes();
+            else this.renderThreads(threads);
+        });
     }
     
     /**
@@ -12,9 +18,12 @@ export class Sidebar {
      */
     init(threadId) {
         this.currentThreadId = threadId;
-        this.bindEvents();
-        this.loadThreadList();
-        this.restoreState();
+        if (!this.initialized) {
+            this.bindEvents();
+            this.restoreState();
+            this.initialized = true;
+        }
+        this.renderThreads(this.store.values());
     }
     
     /**
@@ -47,7 +56,7 @@ export class Sidebar {
      * 返回首页
      */
     goHome() {
-        window.location.href = '/';
+        navigateTo('/');
     }
     
     /**
@@ -140,87 +149,59 @@ export class Sidebar {
      * 支持 ISO 8601 格式：'2026-01-07T03:42:33.875834+00:00'
      */
     formatTime(timeStr) {
-        if (!timeStr) return '';
-        
-        // 解析 ISO 8601 格式的时间字符串
-        const createdDate = new Date(timeStr);
-        const now = Date.now();
-        const diff = now - createdDate.getTime();
-        
-        const minute = 60 * 1000;
-        const hour = 60 * minute;
-        const day = 24 * hour;
-        const week = 7 * day;
-        
-        if (diff < minute) {
-            return '刚刚';
-        } else if (diff < hour) {
-            return `${Math.floor(diff / minute)}分钟前`;
-        } else if (diff < day) {
-            return `${Math.floor(diff / hour)}小时前`;
-        } else if (diff < week) {
-            return `${Math.floor(diff / day)}天前`;
-        } else {
-            // 超过一周，显示具体日期
-            return `${createdDate.getMonth() + 1}/${createdDate.getDate()}`;
-        }
+        return relativeTime(timeStr);
+    }
+
+    updateTimes() {
+        document.querySelectorAll('#threadItems time').forEach(element => {
+            element.textContent = relativeTime(element.dateTime);
+        });
     }
     
     /**
      * 加载会话列表
      */
-    async loadThreadList() {
-        try {
-            const response = await fetch(`${API_BASE}/threads`);
-            const data = await response.json();
-            
-            if (!data.success) return;
-            
-            const threadItems = document.getElementById('threadItems');
-            if (!threadItems) return;
-            
-            threadItems.innerHTML = '';
-            
-            // 前端按最后更新时间倒序排序（最新的在最上面）
-            const sortedThreads = data.threads.sort((a, b) => {
-                const timeA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
-                const timeB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
-                return timeB - timeA;
-            });
-            
-            sortedThreads.forEach(thread => {
-                const isActive = thread.thread_id === this.currentThreadId;
-                const displayTitle = thread.title || '新对话';  // 后端已处理长度
-                const timeText = this.formatTime(thread.updated_at);
-                
-                const item = document.createElement('button');
-                item.className = `flex items-center gap-3 p-3 w-full rounded-lg ${
-                    isActive 
-                        ? 'bg-slate-100 dark:bg-[#232948]' 
-                        : 'hover:bg-slate-50 dark:hover:bg-white/5'
-                } group text-left transition-colors`;
-                
-                item.innerHTML = `
-                    <span class="material-symbols-outlined text-slate-500 dark:text-slate-300 text-[20px]">chat_bubble</span>
-                    <div class="flex-1 overflow-hidden min-w-0">
-                        <p class="text-sm font-medium truncate ${
-                            isActive 
-                                ? 'text-slate-900 dark:text-white' 
-                                : 'text-slate-700 dark:text-slate-300'
-                        }" title="${thread.title || '新对话'}">${displayTitle}</p>
-                        <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">${timeText}</p>
-                    </div>
-                `;
-                
-                item.onclick = () => this.switchThread(thread.thread_id);
-                threadItems.appendChild(item);
-            });
-            
-        } catch (error) {
-            console.error('Load thread list error:', error);
-        }
+    async loadThreadList() { return this.store.refresh(); }
+
+    renderThreads(threads) {
+        const container = document.getElementById('threadItems');
+        if (!container) return;
+        const items = threads.map(thread => {
+            const active = thread.thread_id === this.currentThreadId;
+            const item = document.createElement('button');
+            item.className = `thread-item ${active ? 'is-active' : ''}`;
+            item.dataset.threadId = thread.thread_id;
+            if (active) item.setAttribute('aria-current', 'page');
+            const icon = document.createElement('span');
+            icon.className = 'material-symbols-outlined thread-icon';
+            icon.textContent = 'chat_bubble';
+            icon.setAttribute('aria-hidden', 'true');
+            const body = document.createElement('div');
+            body.className = 'thread-item-body';
+            const title = document.createElement('p');
+            title.className = 'thread-item-title';
+            title.textContent = thread.title || '新对话';
+            title.title = title.textContent;
+            const time = document.createElement('time');
+            time.dateTime = thread.updated_at || '';
+            time.textContent = relativeTime(thread.updated_at);
+            body.append(title, time);
+            item.append(icon, body);
+            const status = threadIndicator(thread, active);
+            if (status) {
+                const dot = document.createElement('span');
+                dot.className = `thread-dot is-${status}`;
+                dot.setAttribute('role', 'img');
+                dot.setAttribute('aria-label', status === 'running' ? '聊天中' : '有新的完成结果');
+                dot.title = status === 'running' ? '聊天中' : '已结束，点击查看';
+                item.append(dot);
+            }
+            item.onclick = () => this.switchThread(thread.thread_id);
+            return item;
+        });
+        container.replaceChildren(...items);
     }
-    
+
     /**
      * 切换会话
      */
@@ -231,17 +212,16 @@ export class Sidebar {
         
         // 切换会话时保留 UI 状态
         const url = ui ? `/chat/${threadId}?ui=${ui}` : `/chat/${threadId}`;
-        window.location.href = url;
+        navigateTo(url);
     }
     
     /**
      * 更新标题
      */
     updateTitle(title) {
-        const titleEl = document.getElementById('chatTitle');
+        const titleEl = document.querySelector('main:not([hidden]) [data-chat-element="chatTitle"]');
         if (titleEl) {
             titleEl.textContent = title;
         }
     }
 }
-

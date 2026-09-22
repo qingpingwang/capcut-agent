@@ -23,25 +23,32 @@ export class MediaLibrary {
             fullscreenBtn: document.getElementById('mediaLibraryFullscreenBtn'),
             mediaList: document.querySelector('#mediaLibrary .flex-1.overflow-y-auto'),
             leftSidebar: document.getElementById('leftSidebar'),
-            mainContent: document.querySelector('main')
+            mainContent: document.querySelector('main:not([hidden])')
         };
     }
     
     /**
      * 初始化媒体库
      */
+    setThread(threadId, chat = null) {
+        this.threadId = threadId;
+        this.chat = chat;
+        this.resources = [];
+        this.renderEmptyState();
+        this.disableOperations();
+    }
+
     async init(threadId, chat = null) {
         try {
-            this.threadId = threadId;
-            this.chat = chat;  // 保存 Chat 实例引用
-            this.bindEvents();
+            this.setThread(threadId, chat);
+            if (!this.bound) { this.bindEvents(); this.bound = true; }
             
             // 加载素材列表
             await this.loadResources();
             
             // 延迟恢复状态（确保 DOM 完全加载）
             setTimeout(() => {
-                this.restoreState();
+                if (this.threadId === threadId) this.restoreState();
             }, 100);
         } catch (error) {
             console.error('❌ 媒体库初始化失败:', error);
@@ -59,9 +66,11 @@ export class MediaLibrary {
             return;
         }
         
+        const threadId = this.threadId;
         try {
-            const response = await fetch(`${API_BASE}/thread/${this.threadId}/resources`);
+            const response = await fetch(`${API_BASE}/thread/${threadId}/resources`);
             const data = await response.json();
+            if (this.threadId !== threadId) return;
             
             if (data.success) {
                 this.resources = data.resources || [];
@@ -70,7 +79,9 @@ export class MediaLibrary {
                 this.resources = [];
                 this.renderEmptyState();
             }
+            this.chat?.updateSendButton();
         } catch (error) {
+            if (this.threadId !== threadId) return;
             console.error('❌ 加载素材失败:', error);
             this.resources = [];
             this.renderEmptyState();
@@ -885,4 +896,3 @@ export class MediaLibrary {
         }, 300);
     }
 }
-

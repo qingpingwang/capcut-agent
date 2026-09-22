@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 from typing import Optional, Union
 import re
+import logging
 
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
@@ -11,7 +12,7 @@ from mcp.server.fastmcp import FastMCP
 load_dotenv()
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-os.environ["JY_Res_Dir"] = str(PROJECT_ROOT / "data")
+os.environ["JY_Res_Dir"] = str(Path(os.getenv("CAPCUT_DATA_DIR", PROJECT_ROOT / "data")).resolve())
 
 # 将项目根目录添加到 Python 搜索路径（确保能导入 rag 模块）
 if str(PROJECT_ROOT) not in sys.path:
@@ -47,19 +48,27 @@ from interface.segment.add_internal_material_to_segment import handler as add_in
 from interface.segment.add_effect_segment import handler as add_effect_segment_handler, AddEffectSegmentRequest
 from interface.segment.add_filter_segment import handler as add_filter_segment_handler, AddFilterSegmentRequest
 from interface.segment.add_audio_effect_segment import handler as add_audio_effect_segment_handler, AddAudioEffectSegmentRequest
-from rag import get_jianying_res_info as load_jianying_res_info
+from src.utils.resource_catalog import list_categories, search_resources, get_resource
 import json
 import requests
 # FastMCP 服务器
 mcp = FastMCP("jianying_tools")
+logger = logging.getLogger(__name__)
+
+
+def resource_operation_result(result: dict) -> dict:
+    """完整材质及异常的 input_value 留在服务端，工具只返回操作状态和标识。"""
+    if result.get("code", 0) != 0:
+        logger.error("Resource operation failed: %s", result)
+        return {"code": result["code"], "message": "资源应用失败，请核对资源名称、工程和轨道。", "data": {}}
+    data = result.get("data", {})
+    return {"code": 0, "message": "资源应用成功", "data": {
+        key: value for key, value in data.items() if key in {"segment_id", "material_id", "task_id", "track_id"}
+    }}
 
 # 全局 TaskManager 实例
 _task_manager: Optional[TaskManager] = None
 JIANYING_PROJECT_DIR = Path.home() / 'Movies/JianyingPro/User Data/Projects/com.lveditor.draft'
-
-# 在启动时加载所有剪映资源信息
-jianying_res_info = load_jianying_res_info()
-
 
 def get_task_manager() -> TaskManager:
     """获取全局 TaskManager 实例（懒加载）"""
@@ -151,13 +160,13 @@ def create_project(request: Union[CreateTaskRequest, dict]) -> dict:
 @mcp.tool()
 def get_project_info(project_id: str) -> dict:
     """
-    获取项目完整信息
+    获取项目基础信息（名称、画布、帧率、时长）
     
     Args:
         project_id: 项目ID
     
     Returns:
-        dict: 项目详细信息（base_info, materials, tracks, segments）
+        dict: 项目基础信息；轨道和片段请通过 get_tracks / get_track_info 查询
     """
     # 兼容 MCP 传入的 dict 参数
     if isinstance(project_id, dict):
@@ -531,9 +540,10 @@ def add_effect_to_track(
             duration=duration
         )
         
-        return add_effect_segment_handler(request, get_task_manager())
-    except Exception as e:
-        return {"error": str(e)}
+        return resource_operation_result(add_effect_segment_handler(request, get_task_manager()))
+    except Exception:
+        logger.exception("Resource application failed")
+        return {"error": "资源应用失败，请重新查询资源并核对工程、轨道和时间参数。"}
 
 
 @mcp.tool()
@@ -591,9 +601,10 @@ def add_filter_to_track(
             duration=duration
         )
         
-        return add_filter_segment_handler(request, get_task_manager())
-    except Exception as e:
-        return {"error": str(e)}
+        return resource_operation_result(add_filter_segment_handler(request, get_task_manager()))
+    except Exception:
+        logger.exception("Resource application failed")
+        return {"error": "资源应用失败，请重新查询资源并核对工程、轨道和时间参数。"}
    
 def download_resource(url: str, local_path: str) -> str:
     """
@@ -661,9 +672,10 @@ def add_audio_effect_to_track(
             audio_material=audio_material_dict,
             start_time=start_time
         )
-        return add_audio_effect_segment_handler(request, get_task_manager())
-    except Exception as e:
-        return {"error": str(e)}
+        return resource_operation_result(add_audio_effect_segment_handler(request, get_task_manager()))
+    except Exception:
+        logger.exception("Resource application failed")
+        return {"error": "资源应用失败，请重新查询资源并核对工程、轨道和时间参数。"}
     
 @mcp.tool()
 def add_material_to_segment(project_id: str, segment_id: str, category: str, name: str) -> dict:
@@ -718,12 +730,30 @@ def add_material_to_segment(project_id: str, segment_id: str, category: str, nam
             internal_material=internal_material
         )
         
-        return add_internal_material_to_segment_handler(request, get_task_manager())
-    except Exception as e:
-        return {"error": str(e)}
+        return resource_operation_result(add_internal_material_to_segment_handler(request, get_task_manager()))
+    except Exception:
+        logger.exception("Resource application failed")
+        return {"error": "资源应用失败，请重新查询资源并核对工程、轨道和时间参数。"}
 
 # ==================== 资源管理 ====================
-def get_jianying_resource(category: str, name: str) -> dict:
+@mcp.tool()
+def list_jianying_resource_categories() -> dict:
+    """查询当前资源库的可用分类及数量。目录由资源加载器读取，不依赖提示词内的静态清单。"""
+    return list_categories()
+
+
+@mcp.tool()
+def search_jianying_resources(category: Optional[str] = None, keyword: str = "",
+                             offset: int = 0, limit: int = 20) -> dict:
+    """按分类和名称/描述关键词查询当前剪映资源，返回名称、描述和分页信息。
+
+    category 从 list_jianying_resource_categories 获取；不传则查询所有分类。
+    使用转场、特效、滤镜、动画、音效前先查询；next_offset 非空时可继续翻页。
+    """
+    return search_resources(category, keyword, offset, limit)
+
+
+def get_jianying_resource(category: str, name: str) -> tuple[str, str]:
     """
     获取剪映内置资源的完整配置信息
     
@@ -741,7 +771,7 @@ def get_jianying_resource(category: str, name: str) -> dict:
         get_jianying_resource(category="转场", name="推近 II")
         → 返回完整的转场效果配置
     """
-    res = jianying_res_info[category][name]
+    res = get_resource(category, name)
     res_content = res['content']
     
     # 获取当前用户的 home 路径并替换资源配置中的路径

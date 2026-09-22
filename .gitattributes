@@ -1,0 +1,2 @@
+# Preserve upstream release files, including their whitespace and line endings.
+static/vendor/** -whitespace -text

@@ -3,7 +3,7 @@ Flask Server - 提供 SSE 流式对话接口
 """
 import os
 import logging
-import sqlite3
+import atexit
 import subprocess
 import json
 import uuid
@@ -11,21 +11,18 @@ import hashlib
 from pathlib import Path
 from flask import Flask, request, Response, jsonify, send_from_directory
 from flask_cors import CORS
-from src.agents.workflow import workflow
+from src.agents.runtime import AgentRuntime, RunConflict, public_state, validate_decisions
+from src.agents.events import message_text, serialize_message
 from src.agents.models import create_initial_state
-from langchain_core.messages import HumanMessage, ToolMessage
-from langgraph.checkpoint.sqlite import SqliteSaver
+from langchain_core.messages import HumanMessage
 from typing import List
 # 配置日志
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# SQLite 数据库路径
-DB_PATH = Path(__file__).parent / "data" / "checkpoints.db"
-DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-# 上传文件存储路径
-UPLOAD_DIR = Path(__file__).parent / "data" / "uploads"
+# 新版状态单独保存，不读取或迁移旧 checkpoints.db。
+DATA_DIR = Path(os.getenv("CAPCUT_DATA_DIR", Path(__file__).parent / "data")).resolve()
+UPLOAD_DIR = DATA_DIR / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -33,10 +30,15 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 CORS(app)
 
-# 初始化 checkpointer 和 graph
-conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
-checkpointer = SqliteSaver(conn)
-graph = workflow.compile(checkpointer=checkpointer)
+# 延迟加载模型/MCP；异步运行时同时管理 checkpoint 和跨会话记忆。
+graph = AgentRuntime(DATA_DIR)
+atexit.register(graph.close)
+
+
+@app.errorhandler(RunConflict)
+def handle_run_conflict(error):
+    return jsonify({"success": False, "error": str(error)}), 409
+
 
 # ==================== 路由：静态页面 ====================
 @app.route('/')
@@ -51,109 +53,74 @@ def chat_page(thread_id):
 @app.route('/uploads/<path:filepath>')
 def serve_upload(filepath):
     """提供上传文件的访问"""
-    upload_base = Path(__file__).parent / "data" / "uploads"
+    upload_base = UPLOAD_DIR
     return send_from_directory(upload_base, filepath)
 
 
-def get_message_role(message) -> str:
-    """判断消息角色类型"""
-    # 检查工具调用
-    if (hasattr(message, "tool_call_chunks") and message.tool_call_chunks and len(message.tool_call_chunks) > 0) or \
-       (hasattr(message, "tool_calls") and message.tool_calls and len(message.tool_calls) > 0):
-        return "tool_call"
-    # 检查工具结果
-    elif isinstance(message, ToolMessage):
-        return "tool_result"
-    # 普通消息
-    else:
-        return "human" if isinstance(message, HumanMessage) else "ai"
-
-
-def stream_graph_execution(input_data, config):
-    """
-    通用的 graph 流式执行处理函数
-    
-    Args:
-        input_data: 输入数据
-        config: LangGraph 配置
-    
-    Yields:
-        SSE 格式的数据字符串
-    """
-    import json
-    
-    message_id = None
-    message_role = None
-    
+def stream_graph_execution(subscription):
     try:
-        for mode, chunk in graph.stream(
-            input_data,
-            config=config,
-            stream_mode=["messages"],
-        ):
-            if mode == "messages":
-                message_token, metadata = chunk
-                
-                # ⭐ 提取 chunk_position（用于标识消息流的最后一个 chunk）
-                chunk_position = message_token.chunk_position if hasattr(message_token, "chunk_position") and message_token.chunk_position else None
-                
-                # 处理 message_id 变化
-                if message_id != message_token.id:
-                    message_role = get_message_role(message_token)
-                    if message_role == "ai" and message_token.content == "":
-                        continue
-                    yield f'data: {json.dumps({"type": "message_change", "role": message_role})}\n\n'
-                    message_id = message_token.id
-                
-                # 处理不同类型的消息
-                if message_role == "tool_call":
-                    tool_call_content = ""
-                    for tool_call in message_token.tool_call_chunks:
-                        tool_call_id = "" if tool_call.get("id") is None else f"🔧 Tool Call({tool_call['id']}):\n"
-                        tool_call_name = "" if tool_call.get("name") is None else f"name: {tool_call['name']}\nargs: "
-                        tool_call_args = tool_call['args']
-                        tool_call_content += f"{tool_call_id}{tool_call_name}{tool_call_args}"
-                    yield f'data: {json.dumps({"type": "token", "content": tool_call_content, "chunk_position": chunk_position})}\n\n'
-                elif message_role == "tool_result":
-                    if not message_token.tool_call_id and message_token.content:
-                        continue
-                    yield f'data: {json.dumps({"type": "token", "content": f"✅ Tool Result({message_token.tool_call_id}):\nresult: {message_token.content}", "chunk_position": chunk_position})}\n\n'
-                else:
-                    yield f'data: {json.dumps({"type": "token", "content": message_token.content, "chunk_position": chunk_position})}\n\n'
-        
-        # 流式结束
-        yield f'data: {json.dumps({"type": "done"})}\n\n'
-    
-    except Exception as stream_error:
-        logger.error(f"Stream error: {stream_error}", exc_info=True)
-        yield f'data: {json.dumps({"type": "error", "error": str(stream_error)})}\n\n'
+        yield ': connected\n\n'
+        for event in graph.consume(subscription):
+            if event["type"] == "heartbeat":
+                yield ': keep-alive\n\n'
+            else:
+                yield f'data: {json.dumps(event, ensure_ascii=False)}\n\n'
+    except Exception as error:
+        logger.error("Agent execution failed", exc_info=True)
+        yield f'data: {json.dumps({"type": "error", "error": str(error)}, ensure_ascii=False)}\n\n'
 
 
-# ==================== API：流式对话 ====================
+def stream_response(thread_id, input_data=None, *, decisions=None, subscribe=False):
+    config = {"configurable": {"thread_id": thread_id}, "recursion_limit": 200}
+    subscription = graph.subscribe(config) if subscribe else graph.start_stream(input_data, config, decisions=decisions)
+    def generate():
+        yield from stream_graph_execution(subscription)
+    return Response(generate(), mimetype="text/event-stream", headers={
+        "Cache-Control": "no-cache", "X-Accel-Buffering": "no",
+    })
+
+
 @app.route('/api/chat/stream', methods=['POST'])
 def chat_stream():
-    data = request.json
-    thread_id = data.get('thread_id')
-    message = data.get('message')
-    
-    if not thread_id or not message:
+    data = request.get_json(silent=True) or {}
+    thread_id, message = data.get('thread_id'), data.get('message')
+    if not isinstance(thread_id, str) or not isinstance(message, str) or not message.strip():
         return jsonify({"error": "missing thread_id or message"}), 400
-    
-    def generate():
-        try:
-            # 发送 thread_id
-            yield f'data: {{"type": "thread_id", "thread_id": "{thread_id}"}}\n\n'
-            
-            config = {"configurable": {"thread_id": thread_id}}
-            input_data = {"messages": [HumanMessage(content=message)], "config": config}
-            
-            yield from stream_graph_execution(input_data, config)
-        
-        except Exception as e:
-            logger.error(f"Stream error: {e}", exc_info=True)
-            yield f'data: {{"type": "error", "error": "{str(e)}"}}\n\n'
-    
-    return Response(generate(), mimetype='text/event-stream')
+    message_id = data.get("message_id") or str(uuid.uuid4())
+    if not isinstance(message_id, str) or len(message_id) > 128:
+        return jsonify({"error": "invalid message_id"}), 400
+    snapshot = graph.get_state({"configurable": {"thread_id": thread_id}})
+    if snapshot.interrupts:
+        return jsonify({"error": "请先处理待审批操作", **public_state(snapshot)}), 409
+    return stream_response(thread_id, {"messages": [HumanMessage(content=message, id=message_id)]})
+
+
+@app.route('/api/thread/<thread_id>/resume', methods=['POST'])
+def resume_thread(thread_id):
+    decisions = (request.get_json(silent=True) or {}).get("decisions")
+    snapshot = graph.get_state({"configurable": {"thread_id": thread_id}})
+    try:
+        validate_decisions(snapshot, decisions)
+    except ValueError as error:
+        return jsonify({"success": False, "error": str(error)}), 400
+    return stream_response(thread_id, decisions=decisions)
+
+
+@app.route('/api/thread/<thread_id>/agent-state', methods=['GET'])
+def get_agent_state(thread_id):
+    snapshot = graph.get_state({"configurable": {"thread_id": thread_id}})
+    return jsonify({"success": True, **public_state(snapshot), "run": graph.activity(thread_id)})
+
+
+@app.route('/api/thread/<thread_id>/events', methods=['GET'])
+def subscribe_thread(thread_id):
+    return stream_response(thread_id, subscribe=True)
+
+
+@app.route('/api/thread/<thread_id>/read', methods=['POST'])
+def mark_thread_read(thread_id):
+    run_id = (request.get_json(silent=True) or {}).get("run_id")
+    return jsonify({"success": True, "run": graph.mark_read(thread_id, run_id)})
 
 
 # ==================== API：初始化会话 ====================
@@ -165,7 +132,7 @@ def init_thread(thread_id):
         
         # 检查是否已存在
         state = graph.get_state(config)
-        if state and state.values.get("messages"):
+        if state and state.values:
             logger.info(f"[INIT] Thread already exists: {thread_id}")
             return jsonify({"success": True, "message": "thread_already_exists"})
         
@@ -175,6 +142,8 @@ def init_thread(thread_id):
         logger.info(f"[INIT] Thread initialized: {thread_id}")
         return jsonify({"success": True, "thread_id": thread_id})
         
+    except RunConflict:
+        raise
     except Exception as e:
         logger.error(f"[INIT] Init thread error: {e}", exc_info=True)
         return jsonify({"success": False, "error": str(e)}), 500
@@ -190,29 +159,8 @@ def get_history(thread_id):
         if not state or len(state.values) == 0:
             return jsonify({"success": False, "error": "thread_not_found"}), 404
         
-        messages = []
-        for msg in state.values["messages"]:
-            role = get_message_role(msg)
-            if role == "tool_call":
-                message_content = ""
-                for tool_call in msg.tool_calls:
-                    if tool_call['id'] == None or tool_call['name'] == None or tool_call['args'] == None:
-                        continue
-                    message_content += f"🔧 Tool Call({tool_call['id']}):\nname: {tool_call['name']}\nargs: {tool_call['args']}\n\n"
-                messages.append({
-                    "role": "tool_call",
-                    "content": message_content.strip()
-                })
-            elif role == "tool_result":
-                messages.append({
-                    "role": role,
-                    "content": f"✅ Tool Result({msg.tool_call_id}):\nresult: {msg.content}"
-                })
-            else:
-                messages.append({
-                    "role": role,
-                    "content": msg.content
-                })
+        messages = [serialize_message(msg, fallback_id=f"history-{index}")
+                    for index, msg in enumerate(state.values.get("messages", []))]
         
         return jsonify({"success": True, "messages": messages})
     except Exception as e:
@@ -225,10 +173,11 @@ def get_history(thread_id):
 def delete_thread(thread_id):
     """删除指定会话的所有数据"""
     try:
-        # SqliteSaver 没有直接的删除方法，需要手动操作数据库
-        checkpointer.delete_thread(thread_id)
+        graph.delete_thread(thread_id)
         logger.info(f"[DELETE] Thread deleted: {thread_id}")
         return jsonify({"success": True})
+    except RunConflict:
+        raise
     except Exception as e:
         logger.error(f"[DELETE] Delete thread error: {e}", exc_info=True)
         return jsonify({"success": False, "error": str(e)}), 500
@@ -295,16 +244,16 @@ def delete_resource(thread_id, resource_id):
         if not resource_to_delete:
             return jsonify({"success": False, "error": "Resource not found"}), 404
         
+        # 先通过运行时校验并保存状态，执行中或待审批时保留原文件。
+        graph.update_state(config, {"resources": updated_resources})
+
         # 删除物理文件
         resource_url = resource_to_delete.get('resource_url', '')
         if resource_url.startswith('/uploads/'):
-            file_path = Path(__file__).parent / "data" / resource_url.lstrip('/')
+            file_path = DATA_DIR / resource_url.lstrip('/')
             if file_path.exists():
                 file_path.unlink()
                 logger.info(f"🗑️  已删除文件: {file_path}")
-        
-        # 更新 state
-        graph.update_state(config, {"resources": updated_resources})
         
         logger.info(f"✅ 已删除素材: {resource_id} (thread: {thread_id})")
         return jsonify({
@@ -312,6 +261,8 @@ def delete_resource(thread_id, resource_id):
             "deleted_resource": resource_to_delete
         })
     
+    except RunConflict:
+        raise
     except Exception as e:
         logger.error(f"❌ 删除素材失败: {e}", exc_info=True)
         return jsonify({"success": False, "error": str(e)}), 500
@@ -319,14 +270,7 @@ def delete_resource(thread_id, resource_id):
 
 
 def get_all_thread_ids() -> List[str]:
-    """获取所有 thread_id 列表"""
-    thread_ids = []
-    for info in checkpointer.list(config=None):
-        thread_id = info.config["configurable"]["thread_id"]
-        if thread_id in thread_ids:
-            continue
-        thread_ids.append(thread_id)
-    return thread_ids
+    return graph.list_threads()
 
 
 def calculate_file_md5(file_path: str) -> str:
@@ -448,6 +392,7 @@ def upload_resource(thread_id):
     """批量上传文件"""
     import time
     start_time = time.time()
+    created_paths = []
     
     try:
         if 'files' not in request.files:
@@ -495,6 +440,7 @@ def upload_resource(thread_id):
             
             # 先保存到临时文件
             temp_path = thread_dir / f"{temp_id}_temp.{ext}"
+            created_paths.append(temp_path)
             file.save(str(temp_path))
             
             # 计算 MD5
@@ -517,6 +463,7 @@ def upload_resource(thread_id):
             resource_id = str(uuid.uuid4())
             file_path = thread_dir / f"{resource_id}.{ext}"
             temp_path.rename(file_path)
+            created_paths.append(file_path)
             
             # 获取文件大小和媒体信息
             file_size = file_path.stat().st_size
@@ -543,6 +490,7 @@ def upload_resource(thread_id):
         new_resources = [r for r in uploaded_resources if not find_resource_by_md5(current_resources, r.get('resource_md5'))]
         updated_resources = current_resources + new_resources
         graph.update_state(config, {"resources": updated_resources})
+        created_paths.clear()
         update_time = time.time() - update_start
         
         total_time = time.time() - start_time
@@ -556,9 +504,15 @@ def upload_resource(thread_id):
             "skipped_count": skipped_count
         })
     
+    except RunConflict:
+        raise
     except Exception as e:
         logger.error(f"❌ 上传文件失败: {e}", exc_info=True)
         return jsonify({"success": False, "error": str(e)}), 500
+    finally:
+        # 状态提交失败（包括待审批/执行冲突）时，不留下未登记的上传文件。
+        for path in created_paths:
+            path.unlink(missing_ok=True)
 
 # ==================== API：获取所有会话列表 ====================
 @app.route('/api/threads', methods=['GET'])
@@ -569,16 +523,22 @@ def list_threads():
         for thread_id in get_all_thread_ids():
             state = graph.get_state({"configurable": {"thread_id": thread_id}})
             # 获取标题
-            title = "新对话" if not state.values.get("messages") else state.values.get("messages")[0].content
+            history = state.values.get("messages", [])
+            title = message_text(history[0]) if history else "新对话"
             if len(title) > 10:
                 title = title[:10] + "..."
             
-            updated_at = state.created_at
+            activity = graph.activity(thread_id)
+            updated_at = activity.get("last_chat_at") or activity.get("created_at") or state.created_at
             
             threads.append({
                 "thread_id": thread_id,
                 "title": title,
-                "updated_at": updated_at
+                "updated_at": updated_at,
+                "run_id": activity.get("run_id"),
+                "run_status": activity.get("run_status", "idle"),
+                "running": activity.get("running", False),
+                "unread": activity.get("unread", False),
             })
         return jsonify({"success": True, "threads": threads})
     except Exception as e:

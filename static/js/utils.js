@@ -16,41 +16,14 @@ export function generateUUID() {
  */
 export function createNewChat() {
     const newThreadId = generateUUID();
-    window.location.href = `/chat/${newThreadId}?new=true`;
+    navigateTo(`/chat/${newThreadId}?new=true`);
 }
 
-/**
- * 转义 HTML 并支持 Markdown 渲染
- */
-export function escapeHtml(text) {
-    if (typeof marked !== 'undefined') {
-        try {
-            const result = marked.parse(text, { async: false });
-            return result;
-        } catch (e) {
-            console.error('❌ Markdown 解析错误:', e);
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML.replace(/\n/g, '<br>');
-        }
-    } else {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML.replace(/\n/g, '<br>');
-    }
-}
-
-/**
- * 滚动到底部
- */
-export function scrollToBottom() {
-    const messages = document.getElementById('chatMessages');
-    if (messages) {
-        messages.scrollTo({
-            top: messages.scrollHeight,
-            behavior: 'smooth'
-        });
-    }
+let navigationHandler = null;
+export function setNavigator(handler) { navigationHandler = handler; }
+export function navigateTo(url) {
+    if (navigationHandler) return navigationHandler(url);
+    window.location.href = url;
 }
 
 /**
@@ -205,7 +178,7 @@ window.copyResourceId = copyResourceId;
 /**
  * API 配置
  */
-export const API_BASE = 'http://localhost:5001/api';
+export const API_BASE = '/api';
 
 /**
  * HTTP 请求封装
@@ -232,4 +205,3 @@ export const HTTP = {
         return await response.json();
     }
 };
-

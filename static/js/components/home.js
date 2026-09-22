@@ -1,9 +1,17 @@
+import { relativeTime, threadIndicator } from '../chat/thread-state.js';
 // ==================== 首页组件 ====================
-import { generateUUID, API_BASE, createNewChat } from '../utils.js';
+import { API_BASE, createNewChat, navigateTo } from '../utils.js';
 
 export class Home {
-    constructor() {
+    constructor(store) {
+        this.store = store;
         this.container = null;
+        store.subscribe((threads, reason) => {
+            if (!this.container) return;
+            if (reason === 'clock') {
+                this.container.querySelectorAll('time').forEach(el => { el.textContent = relativeTime(el.dateTime); });
+            } else this.loadThreads(threads);
+        });
     }
     
     /**
@@ -30,11 +38,11 @@ export class Home {
      */
     hideOtherComponents() {
         const leftSidebar = document.getElementById('leftSidebar');
-        const mainContent = document.querySelector('main');
+        const mainContent = document.querySelectorAll('main');
         const mediaLibrary = document.getElementById('mediaLibrary');
         
         if (leftSidebar) leftSidebar.style.display = 'none';
-        if (mainContent) mainContent.style.display = 'none';
+        mainContent.forEach(main => { main.hidden = true; });
         if (mediaLibrary) mediaLibrary.style.display = 'none';
     }
     
@@ -155,7 +163,7 @@ export class Home {
             
             if (data.success) {
                 // 重新加载列表
-                await this.loadThreads();
+                await this.store.refresh();
             } else {
                 alert('删除失败: ' + data.error);
             }
@@ -168,10 +176,9 @@ export class Home {
     /**
      * 加载历史对话
      */
-    async loadThreads() {
+    async loadThreads(threads = this.store.values()) {
         try {
-            const response = await fetch(`${API_BASE}/threads`);
-            const data = await response.json();
+            const data = { success: true, threads };
             
             const threadList = document.getElementById('homeThreadList');
             if (!threadList) return;
@@ -202,6 +209,7 @@ export class Home {
             threadList.innerHTML = sortedThreads.map(thread => {
                 const displayTitle = thread.title || '新对话';
                 const timeText = this.formatTime(thread.updated_at);
+                const indicator = threadIndicator(thread);
                 
                 return `
                     <div class="group flex items-center gap-4 px-4 py-3 xl:px-6 xl:py-5 rounded-xl xl:rounded-2xl bg-white dark:bg-bubble-agent border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all w-full">
@@ -211,17 +219,18 @@ export class Home {
                         </div>
                         
                         <!-- 标题区域 -->
-                        <div class="flex-1 min-w-0 cursor-pointer" onclick="window.location.href='/chat/${thread.thread_id}'">
+                        <div class="flex-1 min-w-0 cursor-pointer" data-open-thread="${thread.thread_id}">
                             <h3 class="text-sm xl:text-xl font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors" title="${thread.title || '新对话'}">
                                 ${this.escapeHtml(displayTitle)}
                             </h3>
                             <div class="flex items-center gap-2 mt-0.5 xl:mt-1">
                                 <span class="text-[10px] xl:text-xs text-slate-400 dark:text-slate-500 font-medium">
-                                    上次修改：${timeText}
+                                    <time datetime="${thread.updated_at || ''}">${timeText}</time>
                                 </span>
                             </div>
                         </div>
                         
+                        ${indicator ? `<span class="thread-dot is-${indicator}" role="img" aria-label="${indicator === 'running' ? '聊天中' : '有新的完成结果'}"></span>` : ''}
                         <!-- 操作栏 -->
                         <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button onclick="window.homeInstance.deleteThread('${thread.thread_id}', event)" 
@@ -234,6 +243,9 @@ export class Home {
                 `;
             }).join('');
             
+            threadList.querySelectorAll('[data-open-thread]').forEach(element => {
+                element.onclick = () => navigateTo(`/chat/${element.dataset.openThread}`);
+            });
             // 保存实例引用供全局使用
             window.homeInstance = this;
             
@@ -246,31 +258,8 @@ export class Home {
     /**
      * 格式化时间为相对时间
      */
-    formatTime(timeStr) {
-        if (!timeStr) return '';
-        
-        const createdDate = new Date(timeStr);
-        const now = Date.now();
-        const diff = now - createdDate.getTime();
-        
-        const minute = 60 * 1000;
-        const hour = 60 * minute;
-        const day = 24 * hour;
-        const week = 7 * day;
-        
-        if (diff < minute) {
-            return '刚刚';
-        } else if (diff < hour) {
-            return `${Math.floor(diff / minute)} 分钟前`;
-        } else if (diff < day) {
-            return `${Math.floor(diff / hour)} 小时前`;
-        } else if (diff < week) {
-            return `${Math.floor(diff / day)} 天前`;
-        } else {
-            return `${createdDate.getFullYear()}年${createdDate.getMonth() + 1}月${createdDate.getDate()}日`;
-        }
-    }
-    
+    formatTime(timeStr) { return relativeTime(timeStr); }
+
     /**
      * 转义 HTML
      */
